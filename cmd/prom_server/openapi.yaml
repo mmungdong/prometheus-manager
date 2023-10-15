@@ -3,6 +3,179 @@ info:
     version: v0.3.1
 openapi: 3.1.3
 paths:
+    /api/alarmHistory/detail/:id:
+        get:
+            operationId: Detail
+            responses:
+                200:
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    title: ID
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+    /api/alarmHistory/list:
+        get:
+            operationId: List
+            responses:
+                200:
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    page:
+                                        type: object
+                                        title: Page
+            parameters:
+                - name: keyword
+                  in: query
+                  schema:
+                    type: string
+                    title: Keyword
+                - name: curr
+                  in: query
+                  schema:
+                    type: integer
+                    title: Curr
+                - name: size
+                  in: query
+                  schema:
+                    type: integer
+                    title: Size
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+    /api/alarmPage/create:
+        post:
+            operationId: Create
+            responses:
+                200:
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+    /api/alarmPage/delete/:id:
+        delete:
+            operationId: Delete
+            responses:
+                200:
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    title: ID
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+    /api/alarmPage/detail/:id:
+        get:
+            operationId: Detail
+            responses:
+                200:
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    title: ID
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+    /api/alarmPage/edit/:id:
+        put:
+            operationId: Edit
+            responses:
+                200:
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    title: ID
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+    /api/alarmPage/list:
+        get:
+            operationId: List
+            responses:
+                200:
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    page:
+                                        type: object
+                                        title: Page
+            parameters:
+                - name: keyword
+                  in: query
+                  schema:
+                    type: string
+                    title: Keyword
+                - name: curr
+                  in: query
+                  schema:
+                    type: integer
+                    title: Curr
+                - name: size
+                  in: query
+                  schema:
+                    type: integer
+                    title: Size
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
     /api/promDict/create:
         post:
             operationId: Create
@@ -94,6 +267,10 @@ paths:
                         application/json:
                             schema:
                                 type: object
+                                properties:
+                                    page:
+                                        type: object
+                                        title: Page
             parameters:
                 - name: keyword
                   in: query
@@ -462,6 +639,102 @@ paths:
                   schema:
                     type: integer
                     title: Size
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+    /api/strategyGroup/create:
+        post:
+            operationId: Create
+            responses:
+                200:
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+    /api/strategyGroup/delete/:id:
+        delete:
+            operationId: Delete
+            responses:
+                200:
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    title: ID
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+    /api/strategyGroup/detail/:id:
+        get:
+            operationId: Detail
+            responses:
+                200:
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    title: ID
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+    /api/strategyGroup/edit/:id:
+        put:
+            operationId: Edit
+            responses:
+                200:
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    title: ID
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+    /api/strategyGroup/list:
+        post:
+            operationId: PostList
+            responses:
+                200:
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: object
             requestBody:
                 content:
                     application/json:

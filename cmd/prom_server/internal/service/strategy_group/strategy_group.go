@@ -1,4 +1,4 @@
-package StrategyGroup_group
+package strategyGroup
 
 import (
 	ginplus "github.com/aide-cloud/gin-plus"
@@ -20,8 +20,8 @@ type (
 		// add child module
 	}
 
-	// Option ...
-	Option func(*StrategyGroup)
+	// StrategyGroupOption ...
+	StrategyGroupOption func(*StrategyGroup)
 )
 
 // defaultStrategyGroup ...
@@ -32,7 +32,7 @@ func defaultStrategyGroup() *StrategyGroup {
 }
 
 // NewStrategyGroup ...
-func NewStrategyGroup(opts ...Option) *StrategyGroup {
+func NewStrategyGroup(opts ...StrategyGroupOption) *StrategyGroup {
 	m := defaultStrategyGroup()
 	for _, o := range opts {
 		o(m)
@@ -41,7 +41,7 @@ func NewStrategyGroup(opts ...Option) *StrategyGroup {
 	return m
 }
 
-// Middlewares 添加StrategyGroup模块的公共中间件
+// Middlewares ...
 func (l *StrategyGroup) Middlewares() []gin.HandlerFunc {
 	return []gin.HandlerFunc{
 		func(ctx *gin.Context) {

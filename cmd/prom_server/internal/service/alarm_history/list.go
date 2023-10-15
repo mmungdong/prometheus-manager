@@ -1,4 +1,4 @@
-package promDict
+package alarmHistory
 
 import (
 	"context"
@@ -23,7 +23,7 @@ type (
 )
 
 // List ...
-func (l *PromDict) List(ctx context.Context, req *ListReq) (*ListResp, error) {
+func (l *AlarmHistory) List(ctx context.Context, req *ListReq) (*ListResp, error) {
 	// add your code here
 	return &ListResp{}, nil
 }

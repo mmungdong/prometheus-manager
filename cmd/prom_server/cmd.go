@@ -22,11 +22,12 @@ func main() {
 	flag.Parse()
 	bc := Init()
 
+	hello.FmtASCIIGenerator(ServiceName, Version, bc.GetServer().GetMatadata())
+
 	svs := []ginplus.Server{
 		server.NewHttpServer(bc.GetServer()),
 	}
 
-	hello.FmtASCIIGenerator(ServiceName, Version, bc.GetServer().GetMatadata())
 	// 启动gin-plus
 	ginplus.NewCtrlC(svs...).Start()
 }

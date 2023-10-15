@@ -4,8 +4,11 @@ import (
 	"fmt"
 	"time"
 
+	alarmHistory "prometheus-manager/cmd/prom_server/internal/service/alarm_history"
+	alarmPage "prometheus-manager/cmd/prom_server/internal/service/alarm_page"
 	promDict "prometheus-manager/cmd/prom_server/internal/service/prom_dict"
 	"prometheus-manager/cmd/prom_server/internal/service/strategy"
+	strategyGroup "prometheus-manager/cmd/prom_server/internal/service/strategy_group"
 
 	ginplus "github.com/aide-cloud/gin-plus"
 	"github.com/gin-gonic/gin"
@@ -39,7 +42,10 @@ func NewHttpServer(server *conf.Server) *ginplus.GinEngine {
 		ginplus.WithControllers(
 			service.NewApi(
 				service.WithStrategyApi(strategy.NewStrategy()),
+				service.WithStrategyGroupApi(strategyGroup.NewStrategyGroup()),
 				service.WithPromDictApi(promDict.NewPromDict()),
+				service.WithAlarmPageApi(alarmPage.NewAlarmPage()),
+				service.WithAlarmHistoryApi(alarmHistory.NewAlarmHistory()),
 			),
 		),
 	)

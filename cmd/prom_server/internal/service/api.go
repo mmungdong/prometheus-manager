@@ -1,8 +1,11 @@
 package service
 
 import (
+	alarmHistory "prometheus-manager/cmd/prom_server/internal/service/alarm_history"
+	alarmPage "prometheus-manager/cmd/prom_server/internal/service/alarm_page"
 	promDict "prometheus-manager/cmd/prom_server/internal/service/prom_dict"
 	"prometheus-manager/cmd/prom_server/internal/service/strategy"
+	strategyGroup "prometheus-manager/cmd/prom_server/internal/service/strategy_group"
 
 	ginplus "github.com/aide-cloud/gin-plus"
 	"github.com/gin-gonic/gin"
@@ -21,8 +24,11 @@ type (
 	// Api ...
 	Api struct {
 		// add child module
-		Strategy *strategy.Strategy
-		PromDict *promDict.PromDict
+		Strategy      *strategy.Strategy
+		StrategyGroup *strategyGroup.StrategyGroup
+		PromDict      *promDict.PromDict
+		Page          *alarmPage.AlarmPage
+		History       *alarmHistory.AlarmHistory
 	}
 
 	// ApiOption ...
