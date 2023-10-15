@@ -21,6 +21,14 @@ func (c *Bootstrap) GetServer() *Server {
 	return c.Server
 }
 
+func (c *Bootstrap) GetKafka() *Kafka {
+	if c.Data == nil {
+		c.Data = nil
+	}
+
+	return c.Kafka
+}
+
 func (c *Server) GetHttp() *Http {
 	if c.Http == nil {
 		c.Http = nil
@@ -82,4 +90,25 @@ func (c *Http) GetPort() int {
 		return 0
 	}
 	return c.Port
+}
+
+func (c *Kafka) GetEnable() bool {
+	if c == nil {
+		return false
+	}
+	return c.Enable
+}
+
+func (c *Kafka) GetEndpoints() []string {
+	if c == nil {
+		return nil
+	}
+	return c.Endpoints
+}
+
+func (c *Kafka) GetAlertTopic() string {
+	if c == nil {
+		return ""
+	}
+	return c.AlertTopic
 }

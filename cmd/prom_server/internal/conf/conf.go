@@ -16,6 +16,8 @@ type (
 		Data *Data `yaml:"data"`
 		// 服务配置
 		Server *Server `yaml:"server"`
+		// kafka配置
+		Kafka *Kafka `yaml:"kafka"`
 	}
 
 	Data struct {
@@ -42,8 +44,10 @@ type (
 		Debug bool   `yaml:"debug"`
 	}
 
-	Env struct {
-		Metadata map[string]string `yaml:"metadata"`
+	Kafka struct {
+		Enable     bool     `yaml:"enable"`
+		Endpoints  []string `yaml:"endpoints"`
+		AlertTopic string   `yaml:"alert_topic"`
 	}
 
 	BootstrapOption func(*Bootstrap)

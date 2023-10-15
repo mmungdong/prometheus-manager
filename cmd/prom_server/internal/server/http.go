@@ -12,12 +12,15 @@ import (
 
 	ginplus "github.com/aide-cloud/gin-plus"
 	"github.com/gin-gonic/gin"
+	"github.com/go-kratos/kratos/v2/log"
 
 	"prometheus-manager/cmd/prom_server/internal/conf"
 	"prometheus-manager/cmd/prom_server/internal/service"
 )
 
-func NewHttpServer(server *conf.Server) *ginplus.GinEngine {
+func NewHttpServer(server *conf.Server, looger log.Logger) *ginplus.GinEngine {
+	logHelper := log.NewHelper(log.With(looger, "module", "server/server"))
+	logHelper.Infof("HttpServer starting")
 	middle := ginplus.NewMiddleware()
 	var r *gin.Engine
 	// 初始化gin实例
