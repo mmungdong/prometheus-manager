@@ -3,9 +3,10 @@ package main
 import (
 	"flag"
 
-	ginplus "github.com/aide-cloud/gin-plus"
-	"prometheus-manager/cmd/prom-server/internal/server"
+	"prometheus-manager/cmd/prom_server/internal/server"
 	"prometheus-manager/pkg/hello"
+
+	ginplus "github.com/aide-cloud/gin-plus"
 )
 
 var (
@@ -22,7 +23,7 @@ func main() {
 	bc := Init()
 
 	svs := []ginplus.Server{
-		server.NewHttpServer(bc.Server),
+		server.NewHttpServer(bc.GetServer()),
 	}
 
 	hello.FmtASCIIGenerator(ServiceName, Version, bc.GetServer().GetMatadata())

@@ -4,12 +4,14 @@ import (
 	"fmt"
 	"time"
 
+	promDict "prometheus-manager/cmd/prom_server/internal/service/prom_dict"
+	"prometheus-manager/cmd/prom_server/internal/service/strategy"
+
 	ginplus "github.com/aide-cloud/gin-plus"
 	"github.com/gin-gonic/gin"
-	"prometheus-manager/cmd/prom-server/internal/service/strategy"
 
-	"prometheus-manager/cmd/prom-server/internal/conf"
-	"prometheus-manager/cmd/prom-server/internal/service"
+	"prometheus-manager/cmd/prom_server/internal/conf"
+	"prometheus-manager/cmd/prom_server/internal/service"
 )
 
 func NewHttpServer(server *conf.Server) *ginplus.GinEngine {
@@ -37,6 +39,7 @@ func NewHttpServer(server *conf.Server) *ginplus.GinEngine {
 		ginplus.WithControllers(
 			service.NewApi(
 				service.WithStrategyApi(strategy.NewStrategy()),
+				service.WithPromDictApi(promDict.NewPromDict()),
 			),
 		),
 	)

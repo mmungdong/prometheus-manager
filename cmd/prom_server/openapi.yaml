@@ -3,6 +3,118 @@ info:
     version: v0.3.1
 openapi: 3.1.3
 paths:
+    /api/promDict/create:
+        post:
+            operationId: Create
+            responses:
+                200:
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+    /api/promDict/delete/:id:
+        delete:
+            operationId: Delete
+            responses:
+                200:
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    title: ID
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+    /api/promDict/detail/:id:
+        get:
+            operationId: Detail
+            responses:
+                200:
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    title: ID
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+    /api/promDict/edit/:id:
+        put:
+            operationId: Edit
+            responses:
+                200:
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    title: ID
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+    /api/promDict/list:
+        get:
+            operationId: List
+            responses:
+                200:
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+            parameters:
+                - name: keyword
+                  in: query
+                  schema:
+                    type: string
+                    title: Keyword
+                - name: curr
+                  in: query
+                  schema:
+                    type: integer
+                    title: Curr
+                - name: size
+                  in: query
+                  schema:
+                    type: integer
+                    title: Size
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
     /api/strategy/create:
         post:
             operationId: Create
