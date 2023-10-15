@@ -1,9 +1,10 @@
 package data_prom_dict
 
 import (
-	query "github.com/aide-cloud/gorm-normalize"
 	"prometheus-manager/pkg/conn"
 	"prometheus-manager/pkg/dal/model"
+
+	query "github.com/aide-cloud/gorm-normalize"
 )
 
 type (
