@@ -6,7 +6,7 @@ import (
 
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/transport"
-	"prometheus-manager/pkg/runtimehelper"
+	"prometheus-manager/pkg/helper"
 )
 
 type TimerCall func(ctx context.Context)
@@ -22,7 +22,7 @@ func (l *Timer) Start(ctx context.Context) error {
 	l.logger.Info("[Timer] server starting")
 	// 根据ticker的时间间隔，定时执行call
 	go func() {
-		defer runtimehelper.Recover("[Timer] server")
+		defer helper.Recover("[Timer] server")
 		for {
 			select {
 			case <-ctx.Done():

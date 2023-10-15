@@ -1,0 +1,357 @@
+info:
+    title: github.com/aide-cloud/gin-plus
+    version: v0.3.1
+openapi: 3.1.3
+paths:
+    /api/strategy/create:
+        post:
+            operationId: Create
+            responses:
+                200:
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+    /api/strategy/delete/:id:
+        delete:
+            operationId: Delete
+            responses:
+                200:
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    title: ID
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+    /api/strategy/detail/:id:
+        get:
+            operationId: Detail
+            responses:
+                200:
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    title: ID
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+    /api/strategy/edit/:id:
+        put:
+            operationId: Edit
+            responses:
+                200:
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    title: ID
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+    /api/strategy/list:
+        get:
+            operationId: List
+            responses:
+                200:
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    list:
+                                        type: array
+                                        title: List
+                                        items:
+                                            properties:
+                                                alarm_pages:
+                                                    type: array
+                                                    title: AlarmPages
+                                                    items:
+                                                        properties:
+                                                            color:
+                                                                type: string
+                                                                title: Color
+                                                            created_at:
+                                                                type: object
+                                                                title: CreatedAt
+                                                            deleted_at:
+                                                                type: object
+                                                                title: DeletedAt
+                                                            histories:
+                                                                type: array
+                                                                title: Histories
+                                                                items:
+                                                                    properties:
+                                                                        created_at:
+                                                                            type: object
+                                                                            title: CreatedAt
+                                                                        duration:
+                                                                            type: integer
+                                                                            title: Duration
+                                                                        end_at:
+                                                                            type: integer
+                                                                            title: EndAt
+                                                                        id:
+                                                                            type: integer
+                                                                            title: ID
+                                                                        info:
+                                                                            type: string
+                                                                            title: Info
+                                                                        level_id:
+                                                                            type: integer
+                                                                            title: LevelID
+                                                                        md5:
+                                                                            type: string
+                                                                            title: Md5
+                                                                        node:
+                                                                            type: string
+                                                                            title: Node
+                                                                        pages:
+                                                                            type: array
+                                                                            title: Pages
+                                                                            items:
+                                                                                type: object
+                                                                        start_at:
+                                                                            type: integer
+                                                                            title: StartAt
+                                                                        status:
+                                                                            type: string
+                                                                            title: Status
+                                                                        strategy_id:
+                                                                            type: integer
+                                                                            title: StrategyID
+                                                                    type: object
+                                                            icon:
+                                                                type: string
+                                                                title: Icon
+                                                            id:
+                                                                type: integer
+                                                                title: ID
+                                                            name:
+                                                                type: string
+                                                                title: Name
+                                                            prom_strategies:
+                                                                type: array
+                                                                title: PromStrategies
+                                                                items:
+                                                                    type: object
+                                                            remark:
+                                                                type: string
+                                                                title: Remark
+                                                            status:
+                                                                type: integer
+                                                                title: Status
+                                                            updated_at:
+                                                                type: object
+                                                                title: UpdatedAt
+                                                        type: object
+                                                alert:
+                                                    type: string
+                                                    title: Alert
+                                                alert_level:
+                                                    type: object
+                                                    title: AlertLevel
+                                                    properties:
+                                                        category:
+                                                            type: integer
+                                                            title: Category
+                                                        color:
+                                                            type: string
+                                                            title: Color
+                                                        created_at:
+                                                            type: object
+                                                            title: CreatedAt
+                                                        deleted_at:
+                                                            type: object
+                                                            title: DeletedAt
+                                                        id:
+                                                            type: integer
+                                                            title: ID
+                                                        name:
+                                                            type: string
+                                                            title: Name
+                                                        remark:
+                                                            type: string
+                                                            title: Remark
+                                                        status:
+                                                            type: integer
+                                                            title: Status
+                                                        updated_at:
+                                                            type: object
+                                                            title: UpdatedAt
+                                                alert_level_id:
+                                                    type: integer
+                                                    title: AlertLevelID
+                                                annotations:
+                                                    type: string
+                                                    title: Annotations
+                                                categories:
+                                                    type: array
+                                                    title: Categories
+                                                    items:
+                                                        properties:
+                                                            category:
+                                                                type: integer
+                                                                title: Category
+                                                            color:
+                                                                type: string
+                                                                title: Color
+                                                            created_at:
+                                                                type: object
+                                                                title: CreatedAt
+                                                            deleted_at:
+                                                                type: object
+                                                                title: DeletedAt
+                                                            id:
+                                                                type: integer
+                                                                title: ID
+                                                            name:
+                                                                type: string
+                                                                title: Name
+                                                            remark:
+                                                                type: string
+                                                                title: Remark
+                                                            status:
+                                                                type: integer
+                                                                title: Status
+                                                            updated_at:
+                                                                type: object
+                                                                title: UpdatedAt
+                                                        type: object
+                                                created_at:
+                                                    type: object
+                                                    title: CreatedAt
+                                                deleted_at:
+                                                    type: object
+                                                    title: DeletedAt
+                                                expr:
+                                                    type: string
+                                                    title: Expr
+                                                for:
+                                                    type: string
+                                                    title: For
+                                                group_id:
+                                                    type: integer
+                                                    title: GroupID
+                                                group_info:
+                                                    type: object
+                                                    title: GroupInfo
+                                                    properties:
+                                                        categories:
+                                                            type: array
+                                                            title: Categories
+                                                            items:
+                                                                type: object
+                                                        created_at:
+                                                            type: object
+                                                            title: CreatedAt
+                                                        deleted_at:
+                                                            type: object
+                                                            title: DeletedAt
+                                                        id:
+                                                            type: integer
+                                                            title: ID
+                                                        name:
+                                                            type: string
+                                                            title: Name
+                                                        prom_strategies:
+                                                            type: array
+                                                            title: PromStrategies
+                                                            items:
+                                                                type: object
+                                                        remark:
+                                                            type: string
+                                                            title: Remark
+                                                        status:
+                                                            type: integer
+                                                            title: Status
+                                                        strategy_count:
+                                                            type: integer
+                                                            title: StrategyCount
+                                                        updated_at:
+                                                            type: object
+                                                            title: UpdatedAt
+                                                id:
+                                                    type: integer
+                                                    title: ID
+                                                labels:
+                                                    type: string
+                                                    title: Labels
+                                                status:
+                                                    type: integer
+                                                    title: Status
+                                                updated_at:
+                                                    type: object
+                                                    title: UpdatedAt
+                                            type: object
+                                    page:
+                                        type: object
+                                        title: Page
+                                        properties:
+                                            curr:
+                                                type: integer
+                                                title: Curr
+                                            size:
+                                                type: integer
+                                                title: Size
+                                            total:
+                                                type: integer
+                                                title: Total
+            parameters:
+                - name: keyword
+                  in: query
+                  schema:
+                    type: string
+                    title: Keyword
+                - name: curr
+                  in: query
+                  schema:
+                    type: integer
+                    title: Curr
+                - name: size
+                  in: query
+                  schema:
+                    type: integer
+                    title: Size
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object

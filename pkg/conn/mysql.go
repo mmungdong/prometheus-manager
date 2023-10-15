@@ -1,89 +1,46 @@
 package conn
 
 import (
-	"context"
-	"fmt"
-	"time"
+	"database/sql"
+	"sync"
 
-	"github.com/go-kratos/kratos/v2/log"
-	"go.opentelemetry.io/otel"
-	"go.opentelemetry.io/otel/attribute"
+	ginplus "github.com/aide-cloud/gin-plus"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
 )
 
-type DBConfig interface {
-	GetDriver() string
-	GetSource() string
-	GetDebug() bool
-}
+var (
+	_db       *gorm.DB
+	mysqlOnce sync.Once
+)
 
-type GormLogger struct {
-	logger log.Logger
-	level  logger.LogLevel
-}
-
-func NewGormLogger(logger log.Logger) logger.Interface {
-	return &GormLogger{logger: logger}
-}
-
-func (l *GormLogger) LogMode(level logger.LogLevel) logger.Interface {
-	l.level = level
-	return l
-}
-
-func (l *GormLogger) Info(ctx context.Context, s string, i ...interface{}) {
-	_ = log.WithContext(ctx, l.logger).Log(log.LevelInfo, fmt.Sprintf(s, i...))
-}
-
-func (l *GormLogger) Warn(ctx context.Context, s string, i ...interface{}) {
-	_ = log.WithContext(ctx, l.logger).Log(log.LevelWarn, fmt.Sprintf(s, i...))
-}
-
-func (l *GormLogger) Error(ctx context.Context, s string, i ...interface{}) {
-	_ = log.WithContext(ctx, l.logger).Log(log.LevelError, fmt.Sprintf(s, i...))
-}
-
-func (l *GormLogger) Trace(ctx context.Context, begin time.Time, fc func() (sql string, rowsAffected int64), err error) {
-	if l.level >= logger.Info {
-		ctx, span := otel.Tracer("gorm").Start(ctx, "mysql.gorm.trace")
-		defer span.End()
-
-		elapsed := time.Since(begin)
-		sql, rows := fc()
-
-		span.SetAttributes(
-			attribute.String("sql", sql),
-			attribute.Int64("rows", rows),
-			attribute.String("elapsed", elapsed.String()),
-			attribute.String("error", fmt.Sprintf("%v", err)),
-		)
-
+func InitMysqlDB(dsn string, debug bool) {
+	mysqlOnce.Do(func() {
+		sqlDB, err := sql.Open("mysql", dsn)
 		if err != nil {
-			_ = log.WithContext(ctx, l.logger).Log(log.LevelError, "exec", fmt.Sprintf("[%s] %s, %v", sql, elapsed, err))
-		} else {
-			_ = log.WithContext(ctx, l.logger).Log(log.LevelInfo, "exec", fmt.Sprintf("[%s] %s, %d rows affected", sql, elapsed, rows))
+			panic(err)
 		}
-	}
+		db, err := gorm.Open(mysql.New(mysql.Config{
+			Conn: sqlDB,
+		}))
+		if err != nil {
+			panic(err)
+		}
+
+		if debug {
+			db = db.Debug()
+		}
+
+		if err := db.Use(ginplus.NewOpentracingPlugin()); err != nil {
+			panic(err)
+		}
+		_db = db
+	})
 }
 
-// NewMysqlDB 获取mysql数据库连接
-func NewMysqlDB(cfg DBConfig, logger ...log.Logger) (*gorm.DB, error) {
-	var opts []gorm.Option
-	if len(logger) > 0 {
-		//gormLog := NewGormLogger(logger[0])
-		//opts = append(opts, &gorm.Config{Logger: gormLog, DisableForeignKeyConstraintWhenMigrating: true})
+func GetMysqlDB() *gorm.DB {
+	if _db == nil {
+		panic("mysql db not init")
 	}
-
-	conn, err := gorm.Open(mysql.Open(cfg.GetSource()), opts...)
-	if err != nil {
-		return nil, err
-	}
-
-	if cfg.GetDebug() {
-		conn = conn.Debug()
-	}
-
-	return conn, nil
+	return _db
 }

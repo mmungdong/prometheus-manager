@@ -4,6 +4,8 @@ VERSION=$(shell git describe --tags --always)
 APPS ?= $(shell ls apps)
 path := $(shell pwd)
 
+is_dev := $(shell if [ -d ".git" ]; then echo 1; else echo 0; fi)
+
 ifeq ($(GOHOSTOS), windows)
 	#the `find.exe` is different from `find` in bash/shell.
 	#to see https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/find.
@@ -17,6 +19,15 @@ else
 	API_PROTO_FILES=$(shell find api -name *.proto)
 endif
 
+.PHONY: local
+server:
+	@echo "Starting development server..."
+	# 根据is_dev判断是否是开发环境，如果是开发环境，使用config-dev.yaml配置文件，否则使用config-prod.yaml配置文件
+	@if [ $(is_dev) -eq 1 ]; then \
+		cd ./cmd/prom-server && go run . -config configs/config-dev.yaml; \
+	else \
+		cd ./cmd/prom-server && go run . -config configs/config-prod.yaml; \
+	fi
 
 .PHONY: init
 # init env
@@ -28,80 +39,6 @@ init:
 	go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
 	go install github.com/google/wire/cmd/wire@latest
 
-.PHONY: errors
-# generate errors
-errors:
-	protoc --proto_path=./api \
-			 --proto_path=./third_party \
-			 --go_out=paths=source_relative:./api \
-			 --go-errors_out=paths=source_relative:./api \
-			 $(API_PROTO_FILES)
-
-.PHONY: validate
-# generate validate proto
-validate:
-	protoc --proto_path=./api \
-		   --proto_path=./third_party \
-		   --go_out=paths=source_relative:./api \
-		   --validate_out=paths=source_relative,lang=go:./api \
-		   $(API_PROTO_FILES)
-
-.PHONY: api
-# generate api proto
-api: errors validate
-	protoc --proto_path=./api \
-	       --proto_path=./third_party \
- 	       --go_out=paths=source_relative:./api \
- 	       --go-http_out=paths=source_relative:./api \
- 	       --go-grpc_out=paths=source_relative:./api \
-	       --openapi_out=fq_schema_naming=true,default_response=false:. \
-	       $(API_PROTO_FILES)
-.PHONY: data
-# generate service proto
-data:
-	@kratos proto data -t apps/node/internal/data api/strategy/v1/pull/pull.proto
-	@kratos proto data -t apps/node/internal/data api/strategy/v1/push/push.proto
-	@kratos proto data -t apps/node/internal/data api/strategy/v1/load/load.proto
-	@kratos proto data -t apps/node/internal/data api/ping.proto
-	@kratos proto data -t apps/node/internal/data api/alert/v1/alert.proto
-	@kratos proto data -t apps/master/internal/data api/ping.proto
-	@kratos proto data -t apps/master/internal/data api/prom/v1/prom.proto
-	@kratos proto data -t apps/master/internal/data api/prom/v1/dict.proto
-	@kratos proto data -t apps/master/internal/data api/prom/v1/alarm_page.proto
-	@kratos proto data -t apps/master/internal/data api/node/push.proto
-	@kratos proto data -t apps/master/internal/data api/alert/v1/watch.proto
-
-.PHONY: biz
-# generate service proto
-biz:
-	@kratos proto biz -t apps/node/internal/biz api/strategy/v1/pull/pull.proto
-	@kratos proto biz -t apps/node/internal/biz api/strategy/v1/push/push.proto
-	@kratos proto biz -t apps/node/internal/biz api/strategy/v1/load/load.proto
-	@kratos proto biz -t apps/node/internal/biz api/ping.proto
-	@kratos proto biz -t apps/node/internal/biz api/alert/v1/alert.proto
-	@kratos proto biz -t apps/master/internal/biz api/ping.proto
-	@kratos proto biz -t apps/master/internal/biz api/prom/v1/prom.proto
-	@kratos proto biz -t apps/master/internal/biz api/prom/v1/dict.proto
-	@kratos proto biz -t apps/master/internal/biz api/prom/v1/alarm_page.proto
-	@kratos proto biz -t apps/master/internal/biz api/node/push.proto
-	@kratos proto biz -t apps/master/internal/biz api/alert/v1/watch.proto
-
-.PHONY: service
-# generate service proto
-service:
-	@kratos proto server -t apps/node/internal/service api/strategy/v1/pull/pull.proto
-	@kratos proto server -t apps/node/internal/service api/strategy/v1/push/push.proto
-	@kratos proto server -t apps/node/internal/service api/strategy/v1/load/load.proto
-	@kratos proto server -t apps/node/internal/service api/ping.proto
-	@kratos proto server -t apps/node/internal/service api/alert/v1/alert.proto
-	@kratos proto server -t apps/master/internal/service api/ping.proto
-	@kratos proto server -t apps/master/internal/service api/prom/v1/prom.proto
-	@kratos proto server -t apps/master/internal/service api/prom/v1/dict.proto
-	@kratos proto server -t apps/master/internal/service api/prom/v1/alarm_page.proto
-	@kratos proto server -t apps/master/internal/service api/node/push.proto
-	@kratos proto server -t apps/master/internal/service api/alert/v1/watch.proto
-
-
 .PHONY: build
 # build
 build:
@@ -111,39 +48,6 @@ build:
 # test
 test:
 	go test -v ./... -cover
-
-.PHONY: generate
-# generate
-generate:
-	go mod tidy
-	go get github.com/google/wire/cmd/wire@latest
-	go generate ./...
-
-.PHONY: config
-# generate internal config
-config:
-	@for app in $(APPS); do \
-		echo "generate internal config for $$app"; \
-		cd $(path)/apps/$$app && make config; \
-	done
-
-.PHONY: all
-# generate all
-all:
-	make api;
-	make generate;
-
-.PHONY: migrate
-# generate model
-migrate:
-	go run ./migrate
-	@git add .
-
-.PHONY: web
-# start web
-web:
-	@cd apps/master/web && yarn start
-
 
 # show help
 help:

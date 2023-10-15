@@ -36,8 +36,13 @@ bin/
 .vscode/
 .idea/
 *.swp
-**/configs/local*.yaml
+**/configs/*-dev*.yaml
 **/configs/local*.yml
 **/*_temp/
 **/dsn.yml
 **/*_test.db
+
+# Ignore all .DS_Store files in this project
+**/.DS_Store
+
+*-dev.yaml
