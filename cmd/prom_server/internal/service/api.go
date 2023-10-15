@@ -1,9 +1,11 @@
 package service
 
 import (
+	promDict "prometheus-manager/cmd/prom_server/internal/service/prom_dict"
+	"prometheus-manager/cmd/prom_server/internal/service/strategy"
+
 	ginplus "github.com/aide-cloud/gin-plus"
 	"github.com/gin-gonic/gin"
-	"prometheus-manager/cmd/prom-server/internal/service/strategy"
 )
 
 var _ IApi = (*Api)(nil)
@@ -20,6 +22,7 @@ type (
 	Api struct {
 		// add child module
 		Strategy *strategy.Strategy
+		PromDict *promDict.PromDict
 	}
 
 	// ApiOption ...
