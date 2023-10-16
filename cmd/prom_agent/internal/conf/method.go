@@ -7,13 +7,6 @@ func (c *Bootstrap) GetFlag() string {
 	return c.flag
 }
 
-func (c *Bootstrap) GetData() *Data {
-	if c.Data == nil {
-		return nil
-	}
-	return c.Data
-}
-
 func (c *Bootstrap) GetServer() *Server {
 	if c.Server == nil {
 		return nil
@@ -31,7 +24,7 @@ func (c *Bootstrap) GetKafka() *Kafka {
 
 func (c *Server) GetHttp() *Http {
 	if c.Http == nil {
-		return nil
+		c.Http = nil
 	}
 	return c.Http
 }
@@ -55,27 +48,6 @@ func (c *Server) GetMatadata() map[string]string {
 		return nil
 	}
 	return c.Matadata
-}
-
-func (c *Data) GetMysql() *Mysql {
-	if c.Mysql == nil {
-		c.Mysql = nil
-	}
-	return c.Mysql
-}
-
-func (c *Mysql) GetDSN() string {
-	if c == nil {
-		return ""
-	}
-	return c.DSN
-}
-
-func (c *Mysql) GetDebug() bool {
-	if c == nil {
-		return false
-	}
-	return c.Debug
 }
 
 func (c *Http) GetHost() string {

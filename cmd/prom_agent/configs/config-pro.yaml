@@ -1,0 +1,15 @@
+server:
+  name: prometheus-manager_agent
+  mode: release
+  matadata:
+    version: 1.0.0
+    description: prometheus-manager_agent is a prometheus manager agent
+  http:
+    host: '0.0.0.0'
+    port: 8880
+
+kafka:
+  # enable: true
+  alert_topic: "prometheus-manager-node-alert"
+  endpoints:
+    - "localhost:9092"
