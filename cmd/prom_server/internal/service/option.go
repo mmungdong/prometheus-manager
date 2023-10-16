@@ -28,7 +28,7 @@ func WithPromDictApi(promDict *promDict.PromDict) ApiOption {
 
 func WithAlarmPageApi(page *alarmPage.AlarmPage) ApiOption {
 	return func(api *Api) {
-		api.Page = page
+		api.AlarmPage = page
 	}
 }
 

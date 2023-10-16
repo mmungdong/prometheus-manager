@@ -27,7 +27,7 @@ type (
 		Strategy      *strategy.Strategy
 		StrategyGroup *strategyGroup.StrategyGroup
 		PromDict      *promDict.PromDict
-		Page          *alarmPage.AlarmPage
+		AlarmPage     *alarmPage.AlarmPage
 		History       *alarmHistory.AlarmHistory
 	}
 

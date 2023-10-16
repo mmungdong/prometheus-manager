@@ -39,6 +39,16 @@ paths:
                                     page:
                                         type: object
                                         title: Page
+                                        properties:
+                                            curr:
+                                                type: integer
+                                                title: Curr
+                                            size:
+                                                type: integer
+                                                title: Size
+                                            total:
+                                                type: integer
+                                                title: Total
             parameters:
                 - name: keyword
                   in: query
@@ -495,16 +505,6 @@ paths:
                                     page:
                                         type: object
                                         title: Page
-                                        properties:
-                                            curr:
-                                                type: integer
-                                                title: Curr
-                                            size:
-                                                type: integer
-                                                title: Size
-                                            total:
-                                                type: integer
-                                                title: Total
             parameters:
                 - name: keyword
                   in: query
@@ -541,11 +541,47 @@ paths:
                         application/json:
                             schema:
                                 type: object
+                                properties:
+                                    id:
+                                        type: integer
+                                        title: ID
             requestBody:
                 content:
                     application/json:
                         schema:
                             type: object
+                            properties:
+                                alarm_page_ids:
+                                    type: array
+                                    title: AlarmPageIds
+                                    items:
+                                        type: integer
+                                alert:
+                                    type: string
+                                    title: Alert
+                                alert_level_id:
+                                    type: integer
+                                    title: AlertLevelId
+                                annotations:
+                                    type: object
+                                    title: Annotations
+                                expr:
+                                    type: string
+                                    title: Expr
+                                for:
+                                    type: string
+                                    title: For
+                                group_id:
+                                    type: integer
+                                    title: GroupId
+                                labels:
+                                    type: object
+                                    title: Labels
+                                prom_dict_ids:
+                                    type: array
+                                    title: PromDictIds
+                                    items:
+                                        type: integer
     /api/strategy/delete/:id:
         delete:
             operationId: Delete
@@ -556,6 +592,10 @@ paths:
                         application/json:
                             schema:
                                 type: object
+                                properties:
+                                    id:
+                                        type: integer
+                                        title: ID
             parameters:
                 - name: id
                   in: path
@@ -578,6 +618,81 @@ paths:
                         application/json:
                             schema:
                                 type: object
+                                properties:
+                                    alarm_pages:
+                                        type: array
+                                        title: AlarmPages
+                                        items:
+                                            properties:
+                                                id:
+                                                    type: integer
+                                                    title: ID
+                                                name:
+                                                    type: string
+                                                    title: Name
+                                            type: object
+                                    alert:
+                                        type: string
+                                        title: Alert
+                                    alert_level:
+                                        type: object
+                                        title: AlertLevel
+                                        properties:
+                                            id:
+                                                type: integer
+                                                title: ID
+                                            name:
+                                                type: string
+                                                title: Name
+                                    annotations:
+                                        type: object
+                                        title: Annotations
+                                    categories:
+                                        type: array
+                                        title: Categories
+                                        items:
+                                            properties:
+                                                id:
+                                                    type: integer
+                                                    title: ID
+                                                name:
+                                                    type: string
+                                                    title: Name
+                                            type: object
+                                    created_at:
+                                        type: integer
+                                        title: CreatedAt
+                                    deleted_at:
+                                        type: integer
+                                        title: DeletedAt
+                                    expr:
+                                        type: string
+                                        title: Expr
+                                    for:
+                                        type: string
+                                        title: For
+                                    group:
+                                        type: object
+                                        title: Group
+                                        properties:
+                                            id:
+                                                type: integer
+                                                title: ID
+                                            name:
+                                                type: string
+                                                title: Name
+                                    id:
+                                        type: integer
+                                        title: ID
+                                    labels:
+                                        type: object
+                                        title: Labels
+                                    status:
+                                        type: object
+                                        title: Status
+                                    updated_at:
+                                        type: integer
+                                        title: UpdatedAt
             parameters:
                 - name: id
                   in: path
@@ -585,6 +700,11 @@ paths:
                   schema:
                     type: integer
                     title: ID
+                - name: is_delete
+                  in: query
+                  schema:
+                    type: bool
+                    title: IsDelete
             requestBody:
                 content:
                     application/json:
@@ -600,6 +720,10 @@ paths:
                         application/json:
                             schema:
                                 type: object
+                                properties:
+                                    id:
+                                        type: integer
+                                        title: ID
             parameters:
                 - name: id
                   in: path
@@ -612,6 +736,38 @@ paths:
                     application/json:
                         schema:
                             type: object
+                            properties:
+                                alarm_page_ids:
+                                    type: array
+                                    title: AlarmPageIds
+                                    items:
+                                        type: integer
+                                alert:
+                                    type: string
+                                    title: Alert
+                                alert_level_id:
+                                    type: integer
+                                    title: AlertLevelId
+                                annotations:
+                                    type: object
+                                    title: Annotations
+                                expr:
+                                    type: string
+                                    title: Expr
+                                for:
+                                    type: string
+                                    title: For
+                                group_id:
+                                    type: integer
+                                    title: GroupId
+                                labels:
+                                    type: object
+                                    title: Labels
+                                prom_dict_ids:
+                                    type: array
+                                    title: PromDictIds
+                                    items:
+                                        type: integer
     /api/strategy/list:
         get:
             operationId: List
@@ -628,127 +784,20 @@ paths:
                                         title: List
                                         items:
                                             properties:
-                                                alarm_pages:
-                                                    type: array
-                                                    title: AlarmPages
-                                                    items:
-                                                        properties:
-                                                            color:
-                                                                type: string
-                                                                title: Color
-                                                            histories:
-                                                                type: array
-                                                                title: Histories
-                                                                items:
-                                                                    properties:
-                                                                        created_at:
-                                                                            type: object
-                                                                            title: CreatedAt
-                                                                        duration:
-                                                                            type: integer
-                                                                            title: Duration
-                                                                        end_at:
-                                                                            type: integer
-                                                                            title: EndAt
-                                                                        info:
-                                                                            type: string
-                                                                            title: Info
-                                                                        level_id:
-                                                                            type: integer
-                                                                            title: LevelID
-                                                                        md5:
-                                                                            type: string
-                                                                            title: Md5
-                                                                        node:
-                                                                            type: string
-                                                                            title: Node
-                                                                        pages:
-                                                                            type: array
-                                                                            title: Pages
-                                                                            items:
-                                                                                type: object
-                                                                        start_at:
-                                                                            type: integer
-                                                                            title: StartAt
-                                                                        status:
-                                                                            type: string
-                                                                            title: Status
-                                                                        strategy_id:
-                                                                            type: integer
-                                                                            title: StrategyID
-                                                                    type: object
-                                                            icon:
-                                                                type: string
-                                                                title: Icon
-                                                            name:
-                                                                type: string
-                                                                title: Name
-                                                            prom_strategies:
-                                                                type: array
-                                                                title: PromStrategies
-                                                                items:
-                                                                    type: object
-                                                            remark:
-                                                                type: string
-                                                                title: Remark
-                                                            status:
-                                                                type: object
-                                                                title: Status
-                                                        type: object
                                                 alert:
                                                     type: string
                                                     title: Alert
                                                 alert_level:
                                                     type: object
                                                     title: AlertLevel
-                                                    properties:
-                                                        category:
-                                                            type: object
-                                                            title: Category
-                                                        color:
-                                                            type: string
-                                                            title: Color
-                                                        name:
-                                                            type: string
-                                                            title: Name
-                                                        remark:
-                                                            type: string
-                                                            title: Remark
-                                                        status:
-                                                            type: object
-                                                            title: Status
-                                                alert_level_id:
-                                                    type: integer
-                                                    title: AlertLevelID
                                                 annotations:
-                                                    type: string
-                                                    title: Annotations
-                                                categories:
-                                                    type: array
-                                                    title: Categories
-                                                    items:
-                                                        properties:
-                                                            category:
-                                                                type: object
-                                                                title: Category
-                                                            color:
-                                                                type: string
-                                                                title: Color
-                                                            name:
-                                                                type: string
-                                                                title: Name
-                                                            remark:
-                                                                type: string
-                                                                title: Remark
-                                                            status:
-                                                                type: object
-                                                                title: Status
-                                                        type: object
-                                                created_at:
                                                     type: object
+                                                    title: Annotations
+                                                created_at:
+                                                    type: integer
                                                     title: CreatedAt
                                                 deleted_at:
-                                                    type: object
+                                                    type: integer
                                                     title: DeletedAt
                                                 expr:
                                                     type: string
@@ -756,52 +805,17 @@ paths:
                                                 for:
                                                     type: string
                                                     title: For
-                                                group_id:
-                                                    type: integer
-                                                    title: GroupID
                                                 group_info:
                                                     type: object
                                                     title: GroupInfo
-                                                    properties:
-                                                        categories:
-                                                            type: array
-                                                            title: Categories
-                                                            items:
-                                                                type: object
-                                                        created_at:
-                                                            type: object
-                                                            title: CreatedAt
-                                                        deleted_at:
-                                                            type: object
-                                                            title: DeletedAt
-                                                        name:
-                                                            type: string
-                                                            title: Name
-                                                        prom_strategies:
-                                                            type: array
-                                                            title: PromStrategies
-                                                            items:
-                                                                type: object
-                                                        remark:
-                                                            type: string
-                                                            title: Remark
-                                                        status:
-                                                            type: integer
-                                                            title: Status
-                                                        strategy_count:
-                                                            type: integer
-                                                            title: StrategyCount
-                                                        updated_at:
-                                                            type: object
-                                                            title: UpdatedAt
-                                                labels:
-                                                    type: string
-                                                    title: Labels
-                                                status:
+                                                id:
                                                     type: integer
-                                                    title: Status
-                                                updated_at:
+                                                    title: ID
+                                                labels:
                                                     type: object
+                                                    title: Labels
+                                                updated_at:
+                                                    type: integer
                                                     title: UpdatedAt
                                             type: object
                                     page:
@@ -848,11 +862,27 @@ paths:
                         application/json:
                             schema:
                                 type: object
+                                properties:
+                                    id:
+                                        type: integer
+                                        title: ID
             requestBody:
                 content:
                     application/json:
                         schema:
                             type: object
+                            properties:
+                                categories_ids:
+                                    type: array
+                                    title: CategoriesIds
+                                    items:
+                                        type: integer
+                                name:
+                                    type: string
+                                    title: Name
+                                remark:
+                                    type: string
+                                    title: Remark
     /api/strategyGroup/delete/:id:
         delete:
             operationId: Delete
@@ -863,6 +893,10 @@ paths:
                         application/json:
                             schema:
                                 type: object
+                                properties:
+                                    id:
+                                        type: integer
+                                        title: ID
             parameters:
                 - name: id
                   in: path
@@ -885,6 +919,46 @@ paths:
                         application/json:
                             schema:
                                 type: object
+                                properties:
+                                    categories:
+                                        type: array
+                                        title: Categories
+                                        items:
+                                            properties:
+                                                id:
+                                                    type: integer
+                                                    title: ID
+                                                name:
+                                                    type: string
+                                                    title: Name
+                                            type: object
+                                    id:
+                                        type: integer
+                                        title: ID
+                                    name:
+                                        type: string
+                                        title: Name
+                                    prom_strategies:
+                                        type: array
+                                        title: PromStrategies
+                                        items:
+                                            properties:
+                                                alert:
+                                                    type: string
+                                                    title: Alert
+                                                id:
+                                                    type: integer
+                                                    title: ID
+                                            type: object
+                                    remark:
+                                        type: string
+                                        title: Remark
+                                    status:
+                                        type: object
+                                        title: Status
+                                    strategy_count:
+                                        type: integer
+                                        title: StrategyCount
             parameters:
                 - name: id
                   in: path
@@ -892,6 +966,11 @@ paths:
                   schema:
                     type: integer
                     title: ID
+                - name: is_delete
+                  in: query
+                  schema:
+                    type: bool
+                    title: IsDelete
             requestBody:
                 content:
                     application/json:
@@ -907,6 +986,10 @@ paths:
                         application/json:
                             schema:
                                 type: object
+                                properties:
+                                    id:
+                                        type: integer
+                                        title: ID
             parameters:
                 - name: id
                   in: path
@@ -919,6 +1002,21 @@ paths:
                     application/json:
                         schema:
                             type: object
+                            properties:
+                                categories_ids:
+                                    type: array
+                                    title: CategoriesIds
+                                    items:
+                                        type: integer
+                                name:
+                                    type: string
+                                    title: Name
+                                remark:
+                                    type: string
+                                    title: Remark
+                                status:
+                                    type: object
+                                    title: Status
     /api/strategyGroup/list:
         post:
             operationId: PostList
@@ -929,6 +1027,52 @@ paths:
                         application/json:
                             schema:
                                 type: object
+                                properties:
+                                    list:
+                                        type: array
+                                        title: List
+                                        items:
+                                            properties:
+                                                id:
+                                                    type: integer
+                                                    title: ID
+                                                name:
+                                                    type: string
+                                                    title: Name
+                                                remark:
+                                                    type: string
+                                                    title: Remark
+                                                status:
+                                                    type: object
+                                                    title: Status
+                                                strategy_count:
+                                                    type: integer
+                                                    title: StrategyCount
+                                            type: object
+                                    page:
+                                        type: object
+                                        title: Page
+            parameters:
+                - name: keyword
+                  in: query
+                  schema:
+                    type: string
+                    title: Keyword
+                - name: curr
+                  in: query
+                  schema:
+                    type: integer
+                    title: Curr
+                - name: size
+                  in: query
+                  schema:
+                    type: integer
+                    title: Size
+                - name: is_delete
+                  in: query
+                  schema:
+                    type: bool
+                    title: IsDelete
             requestBody:
                 content:
                     application/json:
