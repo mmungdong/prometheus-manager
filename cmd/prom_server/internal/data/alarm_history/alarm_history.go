@@ -1,4 +1,4 @@
-package alarm_history
+package dataAlarmHistory
 
 import (
 	"prometheus-manager/pkg/conn"

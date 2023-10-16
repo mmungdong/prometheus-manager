@@ -70,11 +70,36 @@ paths:
                         application/json:
                             schema:
                                 type: object
+                                properties:
+                                    id:
+                                        type: integer
+                                        title: ID
             requestBody:
                 content:
                     application/json:
                         schema:
                             type: object
+                            properties:
+                                color:
+                                    type: string
+                                    title: Color
+                                icon:
+                                    type: string
+                                    title: Icon
+                                name:
+                                    type: string
+                                    title: Name
+                                prom_strategy_ids:
+                                    type: array
+                                    title: PromStrategyIds
+                                    items:
+                                        type: integer
+                                remark:
+                                    type: string
+                                    title: Remark
+                                status:
+                                    type: object
+                                    title: Status
     /api/alarmPage/delete/:id:
         delete:
             operationId: Delete
@@ -85,6 +110,10 @@ paths:
                         application/json:
                             schema:
                                 type: object
+                                properties:
+                                    id:
+                                        type: integer
+                                        title: ID
             parameters:
                 - name: id
                   in: path
@@ -107,6 +136,37 @@ paths:
                         application/json:
                             schema:
                                 type: object
+                                properties:
+                                    color:
+                                        type: string
+                                        title: Color
+                                    icon:
+                                        type: string
+                                        title: Icon
+                                    id:
+                                        type: integer
+                                        title: ID
+                                    name:
+                                        type: string
+                                        title: Name
+                                    prom_strategies:
+                                        type: array
+                                        title: PromStrategies
+                                        items:
+                                            properties:
+                                                alert:
+                                                    type: string
+                                                    title: Alert
+                                                id:
+                                                    type: integer
+                                                    title: ID
+                                            type: object
+                                    remark:
+                                        type: string
+                                        title: Remark
+                                    status:
+                                        type: object
+                                        title: Status
             parameters:
                 - name: id
                   in: path
@@ -114,6 +174,11 @@ paths:
                   schema:
                     type: integer
                     title: ID
+                - name: is_delete
+                  in: query
+                  schema:
+                    type: bool
+                    title: IsDelete
             requestBody:
                 content:
                     application/json:
@@ -129,6 +194,10 @@ paths:
                         application/json:
                             schema:
                                 type: object
+                                properties:
+                                    id:
+                                        type: integer
+                                        title: ID
             parameters:
                 - name: id
                   in: path
@@ -141,6 +210,22 @@ paths:
                     application/json:
                         schema:
                             type: object
+                            properties:
+                                color:
+                                    type: string
+                                    title: Color
+                                icon:
+                                    type: string
+                                    title: Icon
+                                name:
+                                    type: string
+                                    title: Name
+                                remark:
+                                    type: string
+                                    title: Remark
+                                status:
+                                    type: object
+                                    title: Status
     /api/alarmPage/list:
         get:
             operationId: List
@@ -152,6 +237,39 @@ paths:
                             schema:
                                 type: object
                                 properties:
+                                    list:
+                                        type: array
+                                        title: List
+                                        items:
+                                            properties:
+                                                color:
+                                                    type: string
+                                                    title: Color
+                                                created_at:
+                                                    type: integer
+                                                    title: CreatedAt
+                                                deleted_at:
+                                                    type: integer
+                                                    title: DeletedAt
+                                                icon:
+                                                    type: string
+                                                    title: Icon
+                                                id:
+                                                    type: integer
+                                                    title: ID
+                                                name:
+                                                    type: string
+                                                    title: Name
+                                                remark:
+                                                    type: string
+                                                    title: Remark
+                                                status:
+                                                    type: object
+                                                    title: Status
+                                                updated_at:
+                                                    type: integer
+                                                    title: UpdatedAt
+                                            type: object
                                     page:
                                         type: object
                                         title: Page
@@ -171,6 +289,11 @@ paths:
                   schema:
                     type: integer
                     title: Size
+                - name: is_delete
+                  in: query
+                  schema:
+                    type: bool
+                    title: IsDelete
             requestBody:
                 content:
                     application/json:
@@ -186,11 +309,28 @@ paths:
                         application/json:
                             schema:
                                 type: object
+                                properties:
+                                    id:
+                                        type: integer
+                                        title: ID
             requestBody:
                 content:
                     application/json:
                         schema:
                             type: object
+                            properties:
+                                category:
+                                    type: object
+                                    title: Category
+                                color:
+                                    type: string
+                                    title: Color
+                                name:
+                                    type: string
+                                    title: Name
+                                remark:
+                                    type: string
+                                    title: Remark
     /api/promDict/delete/:id:
         delete:
             operationId: Delete
@@ -201,6 +341,10 @@ paths:
                         application/json:
                             schema:
                                 type: object
+                                properties:
+                                    id:
+                                        type: integer
+                                        title: ID
             parameters:
                 - name: id
                   in: path
@@ -223,6 +367,34 @@ paths:
                         application/json:
                             schema:
                                 type: object
+                                properties:
+                                    category:
+                                        type: object
+                                        title: Category
+                                    color:
+                                        type: string
+                                        title: Color
+                                    create_at:
+                                        type: integer
+                                        title: CreatedAt
+                                    delete_at:
+                                        type: integer
+                                        title: DeletedAt
+                                    id:
+                                        type: integer
+                                        title: ID
+                                    name:
+                                        type: string
+                                        title: Name
+                                    remark:
+                                        type: string
+                                        title: Remark
+                                    status:
+                                        type: object
+                                        title: Status
+                                    update_at:
+                                        type: integer
+                                        title: UpdatedAt
             parameters:
                 - name: id
                   in: path
@@ -230,6 +402,11 @@ paths:
                   schema:
                     type: integer
                     title: ID
+                - name: is_delete
+                  in: query
+                  schema:
+                    type: bool
+                    title: IsDelete
             requestBody:
                 content:
                     application/json:
@@ -245,6 +422,10 @@ paths:
                         application/json:
                             schema:
                                 type: object
+                                properties:
+                                    id:
+                                        type: integer
+                                        title: ID
             parameters:
                 - name: id
                   in: path
@@ -257,6 +438,16 @@ paths:
                     application/json:
                         schema:
                             type: object
+                            properties:
+                                color:
+                                    type: string
+                                    title: Color
+                                name:
+                                    type: string
+                                    title: Name
+                                remark:
+                                    type: string
+                                    title: Remark
     /api/promDict/list:
         get:
             operationId: List
@@ -268,9 +459,52 @@ paths:
                             schema:
                                 type: object
                                 properties:
+                                    list:
+                                        type: array
+                                        title: List
+                                        items:
+                                            properties:
+                                                category:
+                                                    type: object
+                                                    title: Category
+                                                color:
+                                                    type: string
+                                                    title: Color
+                                                create_at:
+                                                    type: integer
+                                                    title: CreatedAt
+                                                delete_at:
+                                                    type: integer
+                                                    title: DeletedAt
+                                                id:
+                                                    type: integer
+                                                    title: ID
+                                                name:
+                                                    type: string
+                                                    title: Name
+                                                remark:
+                                                    type: string
+                                                    title: Remark
+                                                status:
+                                                    type: object
+                                                    title: Status
+                                                update_at:
+                                                    type: integer
+                                                    title: UpdatedAt
+                                            type: object
                                     page:
                                         type: object
                                         title: Page
+                                        properties:
+                                            curr:
+                                                type: integer
+                                                title: Curr
+                                            size:
+                                                type: integer
+                                                title: Size
+                                            total:
+                                                type: integer
+                                                title: Total
             parameters:
                 - name: keyword
                   in: query
@@ -287,6 +521,11 @@ paths:
                   schema:
                     type: integer
                     title: Size
+                - name: is_delete
+                  in: query
+                  schema:
+                    type: bool
+                    title: IsDelete
             requestBody:
                 content:
                     application/json:
@@ -397,12 +636,6 @@ paths:
                                                             color:
                                                                 type: string
                                                                 title: Color
-                                                            created_at:
-                                                                type: object
-                                                                title: CreatedAt
-                                                            deleted_at:
-                                                                type: object
-                                                                title: DeletedAt
                                                             histories:
                                                                 type: array
                                                                 title: Histories
@@ -417,9 +650,6 @@ paths:
                                                                         end_at:
                                                                             type: integer
                                                                             title: EndAt
-                                                                        id:
-                                                                            type: integer
-                                                                            title: ID
                                                                         info:
                                                                             type: string
                                                                             title: Info
@@ -450,9 +680,6 @@ paths:
                                                             icon:
                                                                 type: string
                                                                 title: Icon
-                                                            id:
-                                                                type: integer
-                                                                title: ID
                                                             name:
                                                                 type: string
                                                                 title: Name
@@ -465,11 +692,8 @@ paths:
                                                                 type: string
                                                                 title: Remark
                                                             status:
-                                                                type: integer
-                                                                title: Status
-                                                            updated_at:
                                                                 type: object
-                                                                title: UpdatedAt
+                                                                title: Status
                                                         type: object
                                                 alert:
                                                     type: string
@@ -479,20 +703,11 @@ paths:
                                                     title: AlertLevel
                                                     properties:
                                                         category:
-                                                            type: integer
+                                                            type: object
                                                             title: Category
                                                         color:
                                                             type: string
                                                             title: Color
-                                                        created_at:
-                                                            type: object
-                                                            title: CreatedAt
-                                                        deleted_at:
-                                                            type: object
-                                                            title: DeletedAt
-                                                        id:
-                                                            type: integer
-                                                            title: ID
                                                         name:
                                                             type: string
                                                             title: Name
@@ -500,11 +715,8 @@ paths:
                                                             type: string
                                                             title: Remark
                                                         status:
-                                                            type: integer
-                                                            title: Status
-                                                        updated_at:
                                                             type: object
-                                                            title: UpdatedAt
+                                                            title: Status
                                                 alert_level_id:
                                                     type: integer
                                                     title: AlertLevelID
@@ -517,20 +729,11 @@ paths:
                                                     items:
                                                         properties:
                                                             category:
-                                                                type: integer
+                                                                type: object
                                                                 title: Category
                                                             color:
                                                                 type: string
                                                                 title: Color
-                                                            created_at:
-                                                                type: object
-                                                                title: CreatedAt
-                                                            deleted_at:
-                                                                type: object
-                                                                title: DeletedAt
-                                                            id:
-                                                                type: integer
-                                                                title: ID
                                                             name:
                                                                 type: string
                                                                 title: Name
@@ -538,11 +741,8 @@ paths:
                                                                 type: string
                                                                 title: Remark
                                                             status:
-                                                                type: integer
-                                                                title: Status
-                                                            updated_at:
                                                                 type: object
-                                                                title: UpdatedAt
+                                                                title: Status
                                                         type: object
                                                 created_at:
                                                     type: object
@@ -574,9 +774,6 @@ paths:
                                                         deleted_at:
                                                             type: object
                                                             title: DeletedAt
-                                                        id:
-                                                            type: integer
-                                                            title: ID
                                                         name:
                                                             type: string
                                                             title: Name
@@ -597,9 +794,6 @@ paths:
                                                         updated_at:
                                                             type: object
                                                             title: UpdatedAt
-                                                id:
-                                                    type: integer
-                                                    title: ID
                                                 labels:
                                                     type: string
                                                     title: Labels

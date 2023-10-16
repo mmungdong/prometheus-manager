@@ -1,4 +1,4 @@
-package alarmPage
+package dataAlarmPage
 
 import (
 	"prometheus-manager/pkg/conn"
