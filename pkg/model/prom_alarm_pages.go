@@ -3,6 +3,7 @@ package model
 import (
 	"time"
 
+	query "github.com/aide-cloud/gorm-normalize"
 	"gorm.io/gorm"
 )
 
@@ -10,7 +11,7 @@ const TableNamePromAlarmPage = "prom_alarm_pages"
 
 // PromAlarmPage mapped from table <prom_alarm_pages>
 type PromAlarmPage struct {
-	ID             int32               `gorm:"column:id;type:int unsigned;primaryKey;autoIncrement:true" json:"id"`
+	query.BaseModel
 	Name           string              `gorm:"column:name;type:varchar(64);not null;uniqueIndex:idx__name,priority:1;comment:报警页面名称" json:"name"`  // 报警页面名称
 	Remark         string              `gorm:"column:remark;type:varchar(255);not null;comment:描述信息" json:"remark"`                                // 描述信息
 	Icon           string              `gorm:"column:icon;type:varchar(1024);not null;comment:图表" json:"icon"`                                     // 图表

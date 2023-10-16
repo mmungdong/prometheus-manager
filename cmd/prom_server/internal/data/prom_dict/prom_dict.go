@@ -1,8 +1,8 @@
-package data_prom_dict
+package dataPromDict
 
 import (
 	"prometheus-manager/pkg/conn"
-	"prometheus-manager/pkg/dal/model"
+	"prometheus-manager/pkg/model"
 
 	query "github.com/aide-cloud/gorm-normalize"
 )
@@ -10,7 +10,7 @@ import (
 type (
 	// PromDict mapped from table <prom_dict>
 	PromDict struct {
-		query.IAction[model.PromDict]
+		query.IAction[model.PromDict] `json:"-"`
 	}
 
 	// PromDictOption PromDict's option

@@ -3,6 +3,7 @@ package model
 import (
 	"time"
 
+	query "github.com/aide-cloud/gorm-normalize"
 	"gorm.io/gorm"
 )
 
@@ -10,7 +11,7 @@ const TableNamePromStrategy = "prom_strategies"
 
 // PromStrategy mapped from table <prom_strategies>
 type PromStrategy struct {
-	ID           int32            `gorm:"column:id;type:int unsigned;primaryKey;autoIncrement:true" json:"id"`
+	query.BaseModel
 	GroupID      int32            `gorm:"column:group_id;type:int unsigned;not null;comment:所属规则组ID" json:"group_id"`                                             // 所属规则组ID
 	Alert        string           `gorm:"column:alert;type:varchar(64);not null;comment:规则名称" json:"alert"`                                                       // 规则名称
 	Expr         string           `gorm:"column:expr;type:text;not null;comment:prom ql" json:"expr"`                                                             // prom ql

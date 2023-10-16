@@ -2,13 +2,15 @@ package model
 
 import (
 	"time"
+
+	query "github.com/aide-cloud/gorm-normalize"
 )
 
 const TableNamePromAlarmHistory = "prom_alarm_histories"
 
 // PromAlarmHistory mapped from table <prom_alarm_histories>
 type PromAlarmHistory struct {
-	ID         int32            `gorm:"column:id;type:int unsigned;primaryKey;autoIncrement:true" json:"id"`
+	query.BaseModel
 	Node       string           `gorm:"column:node;type:varchar(64);not null;comment:node名称" json:"node"`                                                        // node名称
 	Status     string           `gorm:"column:status;type:varchar(16);not null;comment:告警消息状态, 报警和恢复" json:"status"`                                             // 告警消息状态, 报警和恢复
 	Info       string           `gorm:"column:info;type:json;not null;comment:原始告警消息" json:"info"`                                                               // 原始告警消息
