@@ -7,7 +7,7 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/spf13/viper"
 
-	"prometheus-manager/api/strategy"
+	"prometheus-manager/pkg/strategy"
 	"prometheus-manager/pkg/util/dir"
 )
 

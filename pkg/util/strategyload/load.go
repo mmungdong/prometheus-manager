@@ -7,7 +7,8 @@ import (
 	"github.com/go-kratos/kratos/v2/config"
 	"github.com/spf13/viper"
 	"go.opentelemetry.io/otel"
-	"prometheus-manager/api/strategy"
+
+	"prometheus-manager/pkg/strategy"
 )
 
 type Strategy struct {
