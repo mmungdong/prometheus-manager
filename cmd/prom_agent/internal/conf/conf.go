@@ -17,6 +17,13 @@ type (
 		Kafka *Kafka `yaml:"kafka"`
 		// Alert ...
 		Alert *Alert `yaml:"alert"`
+		// SynceStrategy ...
+		SynceStrategy *SynceStrategy `yaml:"synce_strategy"`
+	}
+
+	SynceStrategy struct {
+		Enable bool   `yaml:"enable"`
+		Topic  string `yaml:"topic"`
 	}
 
 	Server struct {

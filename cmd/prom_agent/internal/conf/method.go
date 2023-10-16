@@ -8,23 +8,37 @@ func (c *Bootstrap) GetFlag() string {
 }
 
 func (c *Bootstrap) GetServer() *Server {
-	if c.Server == nil {
+	if c == nil {
 		return nil
 	}
 	return c.Server
 }
 
 func (c *Bootstrap) GetKafka() *Kafka {
-	if c.Kafka == nil {
+	if c == nil {
 		return nil
 	}
 
 	return c.Kafka
 }
 
+func (c *Bootstrap) GetAlert() *Alert {
+	if c == nil {
+		return nil
+	}
+	return c.Alert
+}
+
+func (c *Bootstrap) GetSynceStrategy() *SynceStrategy {
+	if c == nil {
+		return nil
+	}
+	return c.SynceStrategy
+}
+
 func (c *Server) GetHttp() *Http {
-	if c.Http == nil {
-		c.Http = nil
+	if c == nil {
+		return nil
 	}
 	return c.Http
 }
@@ -79,6 +93,20 @@ func (c *Kafka) GetEndpoints() []string {
 }
 
 func (c *Alert) GetTopic() string {
+	if c == nil {
+		return ""
+	}
+	return c.Topic
+}
+
+func (c *SynceStrategy) GetEnable() bool {
+	if c == nil {
+		return false
+	}
+	return c.Enable
+}
+
+func (c *SynceStrategy) GetTopic() string {
 	if c == nil {
 		return ""
 	}

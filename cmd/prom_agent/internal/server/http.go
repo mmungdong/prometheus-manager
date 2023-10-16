@@ -6,6 +6,7 @@ import (
 
 	"prometheus-manager/cmd/prom_agent/internal/conf"
 	"prometheus-manager/cmd/prom_agent/internal/service"
+	"prometheus-manager/cmd/prom_agent/internal/service/alert"
 
 	ginplus "github.com/aide-cloud/gin-plus"
 	"github.com/gin-gonic/gin"
@@ -37,7 +38,9 @@ func NewHttpServer(server *conf.Server, looger log.Logger) *ginplus.GinEngine {
 		ginplus.AppendHttpMethodPrefixes(httpMethodPrefixes...),
 		// 注册api模块
 		ginplus.WithControllers(
-			service.NewApi(),
+			service.NewApi(
+				service.WithAlert(alert.NewAlert()),
+			),
 		),
 	)
 	// 注册默认路由

@@ -1,41 +1,39 @@
-package service
+package alert
 
 import (
-	"prometheus-manager/cmd/prom_agent/internal/service/alert"
-
 	ginplus "github.com/aide-cloud/gin-plus"
 	"github.com/gin-gonic/gin"
 )
 
-var _ IApi = (*Api)(nil)
+var _ IAlert = (*Alert)(nil)
 
 type (
-	// IApi ...
-	IApi interface {
+	// IAlert ...
+	IAlert interface {
 		ginplus.Middlewarer
 		ginplus.MethoderMiddlewarer
 		// add interface method
 	}
 
-	// Api ...
-	Api struct {
-		Alert *alert.Alert
+	// Alert ...
+	Alert struct {
+		// add child module
 	}
 
-	// ApiOption ...
-	ApiOption func(*Api)
+	// AlertOption ...
+	AlertOption func(*Alert)
 )
 
-// defaultApi ...
-func defaultApi() *Api {
-	return &Api{
+// defaultAlert ...
+func defaultAlert() *Alert {
+	return &Alert{
 		// add child module
 	}
 }
 
-// NewApi ...
-func NewApi(opts ...ApiOption) *Api {
-	m := defaultApi()
+// NewAlert ...
+func NewAlert(opts ...AlertOption) *Alert {
+	m := defaultAlert()
 	for _, o := range opts {
 		o(m)
 	}
@@ -44,7 +42,7 @@ func NewApi(opts ...ApiOption) *Api {
 }
 
 // Middlewares ...
-func (l *Api) Middlewares() []gin.HandlerFunc {
+func (l *Alert) Middlewares() []gin.HandlerFunc {
 	return []gin.HandlerFunc{
 		func(ctx *gin.Context) {
 			// your code ...
@@ -54,7 +52,7 @@ func (l *Api) Middlewares() []gin.HandlerFunc {
 }
 
 // MethoderMiddlewares ...
-func (l *Api) MethoderMiddlewares() map[string][]gin.HandlerFunc {
+func (l *Alert) MethoderMiddlewares() map[string][]gin.HandlerFunc {
 	return map[string][]gin.HandlerFunc{
 		// your method middlewares
 	}

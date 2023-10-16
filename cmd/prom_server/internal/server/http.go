@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"time"
 
+	"prometheus-manager/cmd/prom_server/internal/conf"
+	"prometheus-manager/cmd/prom_server/internal/service"
 	alarmHistory "prometheus-manager/cmd/prom_server/internal/service/alarm_history"
 	alarmPage "prometheus-manager/cmd/prom_server/internal/service/alarm_page"
 	promDict "prometheus-manager/cmd/prom_server/internal/service/prom_dict"
@@ -13,9 +15,6 @@ import (
 	ginplus "github.com/aide-cloud/gin-plus"
 	"github.com/gin-gonic/gin"
 	"github.com/go-kratos/kratos/v2/log"
-
-	"prometheus-manager/cmd/prom_server/internal/conf"
-	"prometheus-manager/cmd/prom_server/internal/service"
 )
 
 func NewHttpServer(server *conf.Server, looger log.Logger) *ginplus.GinEngine {
