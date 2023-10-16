@@ -2,6 +2,8 @@ package strategyGroup
 
 import (
 	"context"
+
+	dataStrategyGroup "prometheus-manager/cmd/prom_server/internal/data/strategy_group"
 )
 
 type (
@@ -13,12 +15,17 @@ type (
 
 	// DeleteResp ...
 	DeleteResp struct {
-		// add response params
+		ID uint `json:"id"`
 	}
 )
 
 // Delete ...
 func (l *StrategyGroup) Delete(ctx context.Context, req *DeleteReq) (*DeleteResp, error) {
+	strategyGroupData := dataStrategyGroup.NewStrategyGroup()
+
+	if err := strategyGroupData.WithContext(ctx).DeleteByID(req.ID); err != nil {
+		return nil, err
+	}
 	// add your code here
-	return &DeleteResp{}, nil
+	return &DeleteResp{ID: req.ID}, nil
 }

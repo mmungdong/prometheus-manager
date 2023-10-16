@@ -1,4 +1,4 @@
-package strategyGroup
+package dataStrategyGroup
 
 import (
 	"prometheus-manager/pkg/conn"
@@ -11,6 +11,9 @@ type (
 	// StrategyGroup ...
 	StrategyGroup struct {
 		query.IAction[model.PromGroup]
+
+		PreloadCategoriesKey     query.AssociationKey
+		PreloadPromStrategiesKey query.AssociationKey
 	}
 
 	// StrategyGroupOption ...
@@ -20,7 +23,9 @@ type (
 // NewStrategyGroup new a StrategyGroup instance
 func NewStrategyGroup(opts ...StrategyGroupOption) *StrategyGroup {
 	strategy_group := &StrategyGroup{
-		IAction: query.NewAction(query.WithDB[model.PromGroup](conn.GetMysqlDB())),
+		IAction:                  query.NewAction(query.WithDB[model.PromGroup](conn.GetMysqlDB())),
+		PreloadCategoriesKey:     "Categories",
+		PreloadPromStrategiesKey: "PromStrategies",
 	}
 	for _, o := range opts {
 		o(strategy_group)
