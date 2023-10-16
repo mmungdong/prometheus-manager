@@ -29,6 +29,13 @@ func (c *Bootstrap) GetKafka() *Kafka {
 	return c.Kafka
 }
 
+func (c *Bootstrap) GetPushStrategy() *PushStrategy {
+	if c == nil {
+		return nil
+	}
+	return c.PushStrategy
+}
+
 func (c *Server) GetHttp() *Http {
 	if c.Http == nil {
 		return nil
@@ -111,4 +118,18 @@ func (c *Kafka) GetAlertTopic() string {
 		return ""
 	}
 	return c.AlertTopic
+}
+
+func (c *PushStrategy) GetEnable() bool {
+	if c == nil {
+		return false
+	}
+	return c.Enable
+}
+
+func (c *PushStrategy) GetIntervel() int {
+	if c == nil {
+		return 0
+	}
+	return c.Intervel
 }

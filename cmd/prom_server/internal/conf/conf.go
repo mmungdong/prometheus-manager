@@ -18,6 +18,13 @@ type (
 		Server *Server `yaml:"server"`
 		// kafka配置
 		Kafka *Kafka `yaml:"kafka"`
+		// PushStrategy ...
+		PushStrategy *PushStrategy `yaml:"push_strategy"`
+	}
+
+	PushStrategy struct {
+		Enable   bool `yaml:"enable"`
+		Intervel int  `yaml:"intervel"`
 	}
 
 	Data struct {

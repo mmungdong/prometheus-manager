@@ -30,6 +30,7 @@ func main() {
 	svs := []ginplus.Server{
 		server.NewHttpServer(bc.GetServer(), logger),
 		server.NewWatchServer(bc.GetKafka(), logger),
+		server.NewTimer(bc.GetPushStrategy(), logger),
 	}
 
 	// 启动gin-plus

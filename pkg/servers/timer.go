@@ -4,10 +4,13 @@ import (
 	"context"
 	"time"
 
-	"github.com/go-kratos/kratos/v2/log"
-	"github.com/go-kratos/kratos/v2/transport"
 	"prometheus-manager/pkg/helper"
+
+	ginplus "github.com/aide-cloud/gin-plus"
+	"github.com/go-kratos/kratos/v2/log"
 )
+
+var _ ginplus.Server = (*Timer)(nil)
 
 type TimerCall func(ctx context.Context)
 
@@ -18,16 +21,16 @@ type Timer struct {
 	logger *log.Helper
 }
 
-func (l *Timer) Start(ctx context.Context) error {
+func (l *Timer) Start() error {
 	l.logger.Info("[Timer] server starting")
 	// 根据ticker的时间间隔，定时执行call
 	go func() {
 		defer helper.Recover("[Timer] server")
 		for {
 			select {
-			case <-ctx.Done():
-				return
 			case <-l.ticker.C:
+				ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
+				defer cancel()
 				l.call(ctx)
 			case <-l.stop:
 				return
@@ -38,12 +41,11 @@ func (l *Timer) Start(ctx context.Context) error {
 	return nil
 }
 
-func (l *Timer) Stop(_ context.Context) error {
+func (l *Timer) Stop() {
 	l.logger.Info("[Timer] server stopping")
 	l.stop <- struct{}{}
 	l.ticker.Stop()
 	l.logger.Info("[Timer] server stopped")
-	return nil
 }
 
 // NewTimer 创建一个定时器
@@ -55,5 +57,3 @@ func NewTimer(call TimerCall, ticker *time.Ticker, logger log.Logger) *Timer {
 		logger: log.NewHelper(log.With(logger, "module", "server/timer")),
 	}
 }
-
-var _ transport.Server = (*Timer)(nil)
