@@ -2,17 +2,20 @@ package alert
 
 import (
 	"context"
+	"prometheus-manager/pkg/alert"
 )
 
 type (
 	// HookReq ...
 	HookReq struct {
 		// add request params
+		*alert.Data
 	}
 
 	// HookResp ...
 	HookResp struct {
 		// add response params
+		Msg string `json:"msg"`
 	}
 )
 

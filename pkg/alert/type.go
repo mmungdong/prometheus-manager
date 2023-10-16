@@ -1,15 +1,24 @@
 package alert
 
-import "encoding/json"
+import (
+	"database/sql"
+	"database/sql/driver"
+	"encoding/json"
+)
+
+var (
+	_ driver.Valuer = (*KV)(nil)
+	_ sql.Scanner   = (*KV)(nil)
+)
 
 type (
 	KV map[string]string
 
-	Labels            KV
-	GroupLabels       KV
-	Annotations       KV
-	CommonLabels      KV
-	CommonAnnotations KV
+	Labels            = KV
+	GroupLabels       = KV
+	Annotations       = KV
+	CommonLabels      = KV
+	CommonAnnotations = KV
 
 	Alert struct {
 		Status       string      `json:"status"`
@@ -35,10 +44,49 @@ type (
 	}
 )
 
+func (l KV) Scan(src any) error {
+	return json.Unmarshal(src.([]byte), &l)
+}
+
+func (l KV) Value() (driver.Value, error) {
+	if l == nil {
+		return "{}", nil
+	}
+
+	str, err := json.Marshal(l)
+	return string(str), err
+}
+
 func (l *Data) Byte() []byte {
 	if l == nil {
 		return nil
 	}
 	b, _ := json.Marshal(*l)
 	return b
+}
+
+func (l *KV) Equal(r KV) bool {
+	if len(*l) != len(r) {
+		return false
+	}
+
+	for k, v := range *l {
+		if r[k] != v {
+			return false
+		}
+	}
+
+	return true
+}
+
+func (l *KV) Byte() []byte {
+	if l == nil {
+		return nil
+	}
+	b, _ := json.Marshal(*l)
+	return b
+}
+
+func (l *KV) String() string {
+	return string(l.Byte())
 }
