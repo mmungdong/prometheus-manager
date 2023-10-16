@@ -12,3 +12,12 @@ data:
   mysql:
     dsn: root:12345678@tcp(localhost:3306)/prom?charset=utf8mb4&parseTime=True&loc=Local
     debug: true
+
+kafka:
+  # enable: true
+  endpoints:
+    - "localhost:9092"
+
+alert:
+  # enable: true
+  topic: "prometheus-manager-node-alert"

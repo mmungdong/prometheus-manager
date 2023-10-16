@@ -1,5 +1,7 @@
 package conf
 
+import "time"
+
 func (c *Bootstrap) GetFlag() string {
 	if c == nil {
 		return ""
@@ -8,25 +10,32 @@ func (c *Bootstrap) GetFlag() string {
 }
 
 func (c *Bootstrap) GetData() *Data {
-	if c.Data == nil {
+	if c == nil {
 		return nil
 	}
 	return c.Data
 }
 
 func (c *Bootstrap) GetServer() *Server {
-	if c.Server == nil {
+	if c == nil {
 		return nil
 	}
 	return c.Server
 }
 
 func (c *Bootstrap) GetKafka() *Kafka {
-	if c.Kafka == nil {
+	if c == nil {
 		return nil
 	}
 
 	return c.Kafka
+}
+
+func (c *Bootstrap) GetAlert() *Alert {
+	if c == nil {
+		return nil
+	}
+	return c.Alert
 }
 
 func (c *Bootstrap) GetPushStrategy() *PushStrategy {
@@ -113,11 +122,18 @@ func (c *Kafka) GetEndpoints() []string {
 	return c.Endpoints
 }
 
-func (c *Kafka) GetAlertTopic() string {
+func (c *Alert) GetAlertTopic() string {
 	if c == nil {
 		return ""
 	}
-	return c.AlertTopic
+	return c.Topic
+}
+
+func (c *Alert) GetEnable() bool {
+	if c == nil {
+		return false
+	}
+	return c.Enable
 }
 
 func (c *PushStrategy) GetEnable() bool {
@@ -127,9 +143,17 @@ func (c *PushStrategy) GetEnable() bool {
 	return c.Enable
 }
 
-func (c *PushStrategy) GetIntervel() int {
-	if c == nil {
-		return 0
+func (c *PushStrategy) GetIntervel() time.Duration {
+	if c == nil || c.Intervel < 10 {
+		return 10
 	}
+
 	return c.Intervel
+}
+
+func (c *PushStrategy) GetTopic() string {
+	if c == nil {
+		return ""
+	}
+	return c.Topic
 }

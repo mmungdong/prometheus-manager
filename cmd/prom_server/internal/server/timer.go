@@ -12,7 +12,7 @@ import (
 )
 
 func NewTimer(pushStrategy *conf.PushStrategy, logger log.Logger) *servers.Timer {
-	interval := time.Duration(pushStrategy.GetIntervel()) * time.Second
+	interval := pushStrategy.GetIntervel() * time.Second
 	ticker := time.NewTicker(interval)
 	loggerHelper := log.NewHelper(log.With(logger, "module", "server/Timer"))
 
@@ -26,7 +26,7 @@ func NewTimer(pushStrategy *conf.PushStrategy, logger log.Logger) *servers.Timer
 		count++
 		loggerHelper.Info("TimerCallFunc: ", count)
 
-		pushed, err := publishService.PostStrategy(ctx, &publish.StrategyReq{})
+		pushed, err := publishService.PostStrategy(ctx, &publish.StrategyReq{Topic: pushStrategy.GetTopic()})
 		if err != nil {
 			loggerHelper.Errorf("[Timer] call error: %v", err)
 			return

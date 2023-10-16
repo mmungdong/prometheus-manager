@@ -18,21 +18,26 @@ type WatchServer struct {
 	watchService *alert.Alert
 	logger       *log.Helper
 	consumer     *conn.KafkaConsumer
+
+	kafkaConf *conf.Kafka
+	alertConf *conf.Alert
 }
 
 var _ ginplus.Server = (*WatchServer)(nil)
 
-func NewWatchServer(kafkaConf *conf.Kafka, logger log.Logger) *WatchServer {
+func NewWatchServer(kafkaConf *conf.Kafka, alertConf *conf.Alert, logger log.Logger) *WatchServer {
 	watchService := alert.NewAlert()
 	logHelper := log.NewHelper(log.With(logger, "module", "server/server"))
 	if !kafkaConf.GetEnable() {
 		logHelper.Warnf("Not enabel kafka")
 		return &WatchServer{
-			logger: logHelper,
+			logger:    logHelper,
+			alertConf: alertConf,
+			kafkaConf: kafkaConf,
 		}
 	}
 
-	consumer, err := conn.NewKafkaConsumer(kafkaConf.GetEndpoints(), []string{kafkaConf.GetAlertTopic()}, log.DefaultLogger)
+	consumer, err := conn.NewKafkaConsumer(kafkaConf.GetEndpoints(), []string{alertConf.GetAlertTopic()}, log.DefaultLogger)
 	if err != nil {
 		logHelper.Error("kafka消费者初始化失败")
 		panic(err)
@@ -42,12 +47,18 @@ func NewWatchServer(kafkaConf *conf.Kafka, logger log.Logger) *WatchServer {
 		watchService: watchService,
 		logger:       logHelper,
 		consumer:     consumer,
+		alertConf:    alertConf,
+		kafkaConf:    kafkaConf,
 	}
 }
 
 func (l *WatchServer) Start() error {
 	l.logger.Info("[WatchServer] server starting")
 
+	// 如果没有启用监听，则直接返回
+	if !l.alertConf.GetEnable() {
+		return nil
+	}
 	if l.consumer != nil {
 		l.consumer.Consume(func(msg *kafka.Message) (flag bool) {
 			ctx, cancel := context.WithTimeoutCause(context.Background(), 5*time.Second, errors.New("kafka消费超时"))

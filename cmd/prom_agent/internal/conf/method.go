@@ -78,9 +78,9 @@ func (c *Kafka) GetEndpoints() []string {
 	return c.Endpoints
 }
 
-func (c *Kafka) GetAlertTopic() string {
+func (c *Alert) GetTopic() string {
 	if c == nil {
 		return ""
 	}
-	return c.AlertTopic
+	return c.Topic
 }

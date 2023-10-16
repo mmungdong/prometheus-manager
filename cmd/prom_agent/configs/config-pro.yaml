@@ -10,6 +10,9 @@ server:
 
 kafka:
   # enable: true
-  alert_topic: "prometheus-manager-node-alert"
   endpoints:
     - "localhost:9092"
+
+alert:
+  # enable: true
+  topic: "prometheus-manager-node-alert"

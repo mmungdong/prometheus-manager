@@ -15,6 +15,8 @@ type (
 		Server *Server `yaml:"server"`
 		// kafka配置
 		Kafka *Kafka `yaml:"kafka"`
+		// Alert ...
+		Alert *Alert `yaml:"alert"`
 	}
 
 	Server struct {
@@ -32,9 +34,13 @@ type (
 	}
 
 	Kafka struct {
-		Enable     bool     `yaml:"enable"`
-		Endpoints  []string `yaml:"endpoints"`
-		AlertTopic string   `yaml:"alert_topic"`
+		Enable    bool     `yaml:"enable"`
+		Endpoints []string `yaml:"endpoints"`
+	}
+
+	Alert struct {
+		Enable bool   `yaml:"enable"`
+		Topic  string `yaml:"alert_topic"`
 	}
 
 	BootstrapOption func(*Bootstrap)

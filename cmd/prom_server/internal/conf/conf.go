@@ -2,6 +2,7 @@ package conf
 
 import (
 	"sync"
+	"time"
 
 	"github.com/spf13/viper"
 )
@@ -20,11 +21,19 @@ type (
 		Kafka *Kafka `yaml:"kafka"`
 		// PushStrategy ...
 		PushStrategy *PushStrategy `yaml:"push_strategy"`
+		// Alert ...
+		Alert *Alert `yaml:"alert"`
 	}
 
 	PushStrategy struct {
-		Enable   bool `yaml:"enable"`
-		Intervel int  `yaml:"intervel"`
+		Enable   bool          `yaml:"enable"`
+		Intervel time.Duration `yaml:"intervel"`
+		Topic    string        `yaml:"topic"`
+	}
+
+	Alert struct {
+		Enable bool   `yaml:"enable"`
+		Topic  string `yaml:"alert_topic"`
 	}
 
 	Data struct {
@@ -52,9 +61,8 @@ type (
 	}
 
 	Kafka struct {
-		Enable     bool     `yaml:"enable"`
-		Endpoints  []string `yaml:"endpoints"`
-		AlertTopic string   `yaml:"alert_topic"`
+		Enable    bool     `yaml:"enable"`
+		Endpoints []string `yaml:"endpoints"`
 	}
 
 	BootstrapOption func(*Bootstrap)

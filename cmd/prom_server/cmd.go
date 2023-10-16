@@ -29,7 +29,7 @@ func main() {
 
 	svs := []ginplus.Server{
 		server.NewHttpServer(bc.GetServer(), logger),
-		server.NewWatchServer(bc.GetKafka(), logger),
+		server.NewWatchServer(bc.GetKafka(), bc.GetAlert(), logger),
 		server.NewTimer(bc.GetPushStrategy(), logger),
 	}
 
