@@ -2,26 +2,29 @@ package alert
 
 import (
 	"context"
-
 	"prometheus-manager/pkg/alert"
+
+	ginplus "github.com/aide-cloud/gin-plus"
+	"go.uber.org/zap"
 )
 
 type (
 	// HookReq ...
 	HookReq struct {
-		// add request params
 		*alert.Data
 	}
-
 	// HookResp ...
 	HookResp struct {
-		// add response params
+		*alert.Data
 	}
 )
 
 // PostHook ...
 func (l *Alert) PostHook(ctx context.Context, req *HookReq) (*HookResp, error) {
+	ginplus.Logger().Info("PostHook: ", zap.Any("req", req))
 	// 通过kafka发送alert消息
 	// add your code here
-	return &HookResp{}, nil
+	return &HookResp{
+		Data: req.Data,
+	}, nil
 }

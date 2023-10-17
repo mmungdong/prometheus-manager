@@ -2,7 +2,6 @@ package server
 
 import (
 	"fmt"
-	"time"
 
 	"prometheus-manager/cmd/prom_agent/internal/conf"
 	"prometheus-manager/cmd/prom_agent/internal/service"
@@ -16,7 +15,7 @@ import (
 func NewHttpServer(server *conf.Server, looger log.Logger) *ginplus.GinEngine {
 	logHelper := log.NewHelper(log.With(looger, "module", "server/server"))
 	logHelper.Infof("HttpServer starting")
-	middle := ginplus.NewMiddleware()
+	// middle := ginplus.NewMiddleware()
 	var r *gin.Engine
 	// 初始化gin实例
 	if server.Mode == gin.DebugMode {
@@ -28,8 +27,8 @@ func NewHttpServer(server *conf.Server, looger log.Logger) *ginplus.GinEngine {
 	}
 
 	r.Use(
-		middle.Cors(),
-		middle.Logger(server.Name, time.DateTime),
+	// middle.Cors(),
+	// middle.Logger(server.Name, time.DateTime),
 	)
 
 	// 初始化ginplus实例

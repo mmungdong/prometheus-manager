@@ -20,8 +20,9 @@ func Init() *conf.Bootstrap {
 	ginplus.Logger().Sugar().Infof("%s version: %s", ServiceName, Version)
 
 	if bc.Data != nil {
-		if bc.Data.Mysql != nil && bc.Data.Mysql.DSN != "" {
-			conn.InitMysqlDB(bc.Data.Mysql.DSN, bc.Data.Mysql.Debug)
+		mysqlConf := bc.GetData().GetMysql()
+		if mysqlConf != nil && mysqlConf.GetDSN() != "" {
+			conn.InitMysqlDB(mysqlConf.GetDSN(), mysqlConf.GetDebug())
 		}
 	}
 

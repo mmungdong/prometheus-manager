@@ -21,26 +21,26 @@ type (
 	CommonAnnotations = KV
 
 	Alert struct {
-		Status       string      `json:"status"`
-		Labels       Labels      `json:"labels"`
-		Annotations  Annotations `json:"annotations"`
-		StartsAt     int64       `json:"startsAt"`
-		EndsAt       int64       `json:"endsAt"`
-		GeneratorURL string      `json:"generatorURL"`
-		Fingerprint  string      `json:"fingerprint"`
+		Status       string      `json:"status" form:"status"`
+		Labels       Labels      `json:"labels" form:"labels"`
+		Annotations  Annotations `json:"annotations" form:"annotations"`
+		StartsAt     string      `json:"startsAt" form:"startsAt"`
+		EndsAt       string      `json:"endsAt" form:"endsAt"`
+		GeneratorURL string      `json:"generatorURL" form:"generatorURL"`
+		Fingerprint  string      `json:"fingerprint" form:"fingerprint"`
 	}
 
 	Data struct {
-		Receiver          string            `json:"receiver"`
-		Status            string            `json:"status"`
-		Alerts            []*Alert          `json:"alerts"`
-		GroupLabels       GroupLabels       `json:"groupLabels"`
-		CommonLabels      CommonLabels      `json:"commonLabels"`
-		CommonAnnotations CommonAnnotations `json:"commonAnnotations"`
-		ExternalURL       string            `json:"externalURL"`
-		Version           string            `json:"version"`
-		GroupKey          string            `json:"groupKey"`
-		TruncatedAlerts   int32             `json:"truncatedAlerts"`
+		Receiver          string            `json:"receiver" form:"receiver"`
+		Status            string            `json:"status" form:"status"`
+		Alerts            []*Alert          `json:"alerts" form:"alerts"`
+		GroupLabels       GroupLabels       `json:"groupLabels" form:"groupLabels"`
+		CommonLabels      CommonLabels      `json:"commonLabels" form:"commonLabels"`
+		CommonAnnotations CommonAnnotations `json:"commonAnnotations" form:"commonAnnotations"`
+		ExternalURL       string            `json:"externalURL" form:"externalURL"`
+		Version           string            `json:"version" form:"version"`
+		GroupKey          string            `json:"groupKey" form:"groupKey"`
+		TruncatedAlerts   int32             `json:"truncatedAlerts" form:"truncatedAlerts"`
 	}
 )
 
