@@ -11,14 +11,19 @@
 
 ![Architecture overview](doc/img/Prometheus-manager.png)
 
-## Init
+## server 开发
 
 ```bash
-# init
-make init
+make server
 ```
 
-## Docker
+## agent 开发
+
+```bash
+make agent
+```
+
+## Docker 打包/运行
 
 ```bash
 # build
