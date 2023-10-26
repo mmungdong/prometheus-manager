@@ -2,6 +2,7 @@ package promDict
 
 import (
 	"context"
+
 	dataPromDict "prometheus-manager/cmd/prom_server/internal/data/prom_dict"
 )
 

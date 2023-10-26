@@ -2,10 +2,11 @@ package strategyGroup
 
 import (
 	"context"
-	dataStrategyGroup "prometheus-manager/cmd/prom_server/internal/data/strategy_group"
-	"prometheus-manager/pkg/model"
 
 	query "github.com/aide-cloud/gorm-normalize"
+
+	dataStrategyGroup "prometheus-manager/cmd/prom_server/internal/data/strategy_group"
+	"prometheus-manager/pkg/model"
 )
 
 type (
@@ -20,12 +21,12 @@ type (
 
 	// ListResp ...
 	ListResp struct {
-		Page *query.Page          `json:"page"`
-		List []*StrategyGroupItem `json:"list"`
+		Page *query.Page `json:"page"`
+		List []*Item     `json:"list"`
 	}
 
-	// StrategyGroupItem ...
-	StrategyGroupItem struct {
+	// Item ...
+	Item struct {
 		ID            uint         `json:"id"`
 		Name          string       `json:"name"`
 		Remark        string       `json:"remark"`
@@ -55,9 +56,9 @@ func (l *StrategyGroup) PostList(ctx context.Context, req *ListReq) (*ListResp, 
 		return nil, err
 	}
 
-	list := make([]*StrategyGroupItem, 0, len(strategyGroups))
+	list := make([]*Item, 0, len(strategyGroups))
 	for _, strategyGroup := range strategyGroups {
-		list = append(list, &StrategyGroupItem{
+		list = append(list, &Item{
 			ID:            strategyGroup.ID,
 			Name:          strategyGroup.Name,
 			Remark:        strategyGroup.Remark,

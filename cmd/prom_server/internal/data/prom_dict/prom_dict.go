@@ -1,10 +1,10 @@
 package dataPromDict
 
 import (
+	query "github.com/aide-cloud/gorm-normalize"
+
 	"prometheus-manager/pkg/conn"
 	"prometheus-manager/pkg/model"
-
-	query "github.com/aide-cloud/gorm-normalize"
 )
 
 type (
@@ -13,7 +13,7 @@ type (
 		query.IAction[model.PromDict] `json:"-"`
 	}
 
-	// PromDictOption PromDict's option
+	// PromDictOption PromDict option
 	PromDictOption func(*PromDict)
 )
 

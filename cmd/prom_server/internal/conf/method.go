@@ -66,11 +66,11 @@ func (c *Server) GetMode() string {
 	return c.Mode
 }
 
-func (c *Server) GetMatadata() map[string]string {
+func (c *Server) GetMetadata() map[string]string {
 	if c == nil {
 		return nil
 	}
-	return c.Matadata
+	return c.Metadata
 }
 
 func (c *Data) GetMysql() *Mysql {
@@ -143,12 +143,12 @@ func (c *PushStrategy) GetEnable() bool {
 	return c.Enable
 }
 
-func (c *PushStrategy) GetIntervel() time.Duration {
-	if c == nil || c.Intervel < 10 {
+func (c *PushStrategy) GetInterval() time.Duration {
+	if c == nil || c.Interval < 10 {
 		return 10
 	}
 
-	return c.Intervel
+	return c.Interval
 }
 
 func (c *PushStrategy) GetTopic() string {

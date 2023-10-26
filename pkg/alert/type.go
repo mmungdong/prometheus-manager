@@ -65,12 +65,12 @@ func (l *Data) Byte() []byte {
 	return b
 }
 
-func (l *KV) Equal(r KV) bool {
-	if len(*l) != len(r) {
+func (l KV) Equal(r KV) bool {
+	if len(l) != len(r) {
 		return false
 	}
 
-	for k, v := range *l {
+	for k, v := range l {
 		if r[k] != v {
 			return false
 		}
@@ -79,14 +79,14 @@ func (l *KV) Equal(r KV) bool {
 	return true
 }
 
-func (l *KV) Byte() []byte {
+func (l KV) Byte() []byte {
 	if l == nil {
 		return nil
 	}
-	b, _ := json.Marshal(*l)
+	b, _ := json.Marshal(l)
 	return b
 }
 
-func (l *KV) String() string {
+func (l KV) String() string {
 	return string(l.Byte())
 }

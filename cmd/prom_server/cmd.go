@@ -25,12 +25,12 @@ func main() {
 	// 初始化日志
 	logger := plog.NewLog()
 
-	hello.FmtASCIIGenerator(ServiceName, Version, bc.GetServer().GetMatadata())
+	hello.FmtASCIIGenerator(ServiceName, Version, bc.GetServer().GetMetadata())
 
 	svs := []ginplus.Server{
-		server.NewHttpServer(bc.GetServer(), logger),
-		server.NewWatchServer(bc.GetKafka(), bc.GetAlert(), logger),
-		server.NewTimer(bc.GetPushStrategy(), logger),
+		server.NewHttpServer(bc, logger),
+		server.NewWatchServer(bc, logger),
+		server.NewTimeServer(bc, logger),
 	}
 
 	// 启动gin-plus

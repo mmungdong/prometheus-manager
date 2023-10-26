@@ -2,6 +2,7 @@ package strategyGroup
 
 import (
 	"context"
+
 	dataStrategyGroup "prometheus-manager/cmd/prom_server/internal/data/strategy_group"
 	"prometheus-manager/pkg/model"
 )

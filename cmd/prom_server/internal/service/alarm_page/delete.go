@@ -2,6 +2,7 @@ package alarmPage
 
 import (
 	"context"
+
 	dataAlarmPage "prometheus-manager/cmd/prom_server/internal/data/alarm_page"
 )
 

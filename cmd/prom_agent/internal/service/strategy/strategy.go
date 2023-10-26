@@ -20,8 +20,8 @@ type (
 		// add child module
 	}
 
-	// StrategyOption ...
-	StrategyOption func(*Strategy)
+	// Option ...
+	Option func(*Strategy)
 )
 
 // defaultStrategy ...
@@ -32,7 +32,7 @@ func defaultStrategy() *Strategy {
 }
 
 // NewStrategy ...
-func NewStrategy(opts ...StrategyOption) *Strategy {
+func NewStrategy(opts ...Option) *Strategy {
 	m := defaultStrategy()
 	for _, o := range opts {
 		o(m)

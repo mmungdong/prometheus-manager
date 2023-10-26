@@ -20,8 +20,8 @@ type (
 		// add child module
 	}
 
-	// AlertOption ...
-	AlertOption func(*Alert)
+	// Option ...
+	Option func(*Alert)
 )
 
 // defaultAlert ...
@@ -32,7 +32,7 @@ func defaultAlert() *Alert {
 }
 
 // NewAlert ...
-func NewAlert(opts ...AlertOption) *Alert {
+func NewAlert(opts ...Option) *Alert {
 	m := defaultAlert()
 	for _, o := range opts {
 		o(m)

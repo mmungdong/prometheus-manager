@@ -24,11 +24,11 @@ type (
 	// ListResp ...
 	ListResp struct {
 		// add response params
-		Page *query.Page      `json:"page"`
-		List []*AlarmPageItem `json:"list"`
+		Page *query.Page `json:"page"`
+		List []*Item     `json:"list"`
 	}
 
-	AlarmPageItem struct {
+	Item struct {
 		ID     uint         `json:"id"`
 		Name   string       `json:"name"`
 		Icon   string       `json:"icon"`
@@ -53,9 +53,9 @@ func (l *AlarmPage) List(ctx context.Context, req *ListReq) (*ListResp, error) {
 		return nil, err
 	}
 
-	list := make([]*AlarmPageItem, 0, len(alarmList))
+	list := make([]*Item, 0, len(alarmList))
 	for _, alarmPage := range alarmList {
-		list = append(list, &AlarmPageItem{
+		list = append(list, &Item{
 			ID:        alarmPage.ID,
 			Name:      alarmPage.Name,
 			Icon:      alarmPage.Icon,

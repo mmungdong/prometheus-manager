@@ -12,12 +12,12 @@ import (
 )
 
 type Strategy struct {
-	source       []*strategy.StrategyDir
+	source       []*strategy.Dir
 	loggerHelper *log.Helper
 }
 
 // NewStrategy 初始化配置文件
-func NewStrategy(source []*strategy.StrategyDir, loggerHelper *log.Helper) *Strategy {
+func NewStrategy(source []*strategy.Dir, loggerHelper *log.Helper) *Strategy {
 	return &Strategy{
 		source:       source,
 		loggerHelper: loggerHelper,
@@ -25,10 +25,10 @@ func NewStrategy(source []*strategy.StrategyDir, loggerHelper *log.Helper) *Stra
 }
 
 // StoreStrategy 存储策略
-func (l *Strategy) StoreStrategy() ([]*strategy.StrategyDir, error) {
+func (l *Strategy) StoreStrategy() ([]*strategy.Dir, error) {
 	viper.SetConfigType("yaml")
 
-	list := make([]*strategy.StrategyDir, 0, len(l.source))
+	list := make([]*strategy.Dir, 0, len(l.source))
 
 	for _, strategyDir := range l.source {
 		isDir, err := dir.IsDir(strategyDir.GetDir())
@@ -65,7 +65,7 @@ func (l *Strategy) StoreStrategy() ([]*strategy.StrategyDir, error) {
 		}
 
 		if len(strategyTempList) > 0 {
-			list = append(list, &strategy.StrategyDir{
+			list = append(list, &strategy.Dir{
 				Dir:        strategyDir.GetDir(),
 				Strategies: strategyTempList,
 			})

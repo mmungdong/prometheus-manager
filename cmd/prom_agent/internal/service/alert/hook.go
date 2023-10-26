@@ -2,10 +2,11 @@ package alert
 
 import (
 	"context"
-	"prometheus-manager/pkg/alert"
 
 	ginplus "github.com/aide-cloud/gin-plus"
 	"go.uber.org/zap"
+	
+	"prometheus-manager/pkg/alert"
 )
 
 type (

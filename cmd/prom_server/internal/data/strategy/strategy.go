@@ -1,11 +1,11 @@
 package dataStrategy
 
 import (
-	"prometheus-manager/pkg/conn"
-	"prometheus-manager/pkg/model"
-
 	query "github.com/aide-cloud/gorm-normalize"
 	"gorm.io/gorm"
+
+	"prometheus-manager/pkg/conn"
+	"prometheus-manager/pkg/model"
 )
 
 type (

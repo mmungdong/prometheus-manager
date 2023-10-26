@@ -2,12 +2,13 @@ package strategyGroup
 
 import (
 	"context"
-	dataStrategyGroup "prometheus-manager/cmd/prom_server/internal/data/strategy_group"
-	"prometheus-manager/pkg/model"
 
 	query "github.com/aide-cloud/gorm-normalize"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
+
+	dataStrategyGroup "prometheus-manager/cmd/prom_server/internal/data/strategy_group"
+	"prometheus-manager/pkg/model"
 )
 
 type (

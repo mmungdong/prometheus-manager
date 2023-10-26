@@ -20,8 +20,8 @@ type (
 		// add child module
 	}
 
-	// AlarmPageOption ...
-	AlarmPageOption func(*AlarmPage)
+	// Option ...
+	Option func(*AlarmPage)
 )
 
 // defaultAlarmPage ...
@@ -32,7 +32,7 @@ func defaultAlarmPage() *AlarmPage {
 }
 
 // NewAlarmPage ...
-func NewAlarmPage(opts ...AlarmPageOption) *AlarmPage {
+func NewAlarmPage(opts ...Option) *AlarmPage {
 	m := defaultAlarmPage()
 	for _, o := range opts {
 		o(m)

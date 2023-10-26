@@ -20,8 +20,8 @@ type (
 		// add child module
 	}
 
-	// PublishOption ...
-	PublishOption func(*Publish)
+	// Option ...
+	Option func(*Publish)
 )
 
 // defaultPublish ...
@@ -32,7 +32,7 @@ func defaultPublish() *Publish {
 }
 
 // NewPublish ...
-func NewPublish(opts ...PublishOption) *Publish {
+func NewPublish(opts ...Option) *Publish {
 	m := defaultPublish()
 	for _, o := range opts {
 		o(m)

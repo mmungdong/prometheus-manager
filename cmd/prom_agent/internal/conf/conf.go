@@ -17,11 +17,11 @@ type (
 		Kafka *Kafka `yaml:"kafka"`
 		// Alert ...
 		Alert *Alert `yaml:"alert"`
-		// SynceStrategy ...
-		SynceStrategy *SynceStrategy `yaml:"synce_strategy"`
+		// SyncStrategy ...
+		SyncStrategy *SyncStrategy `yaml:"sync_strategy"`
 	}
 
-	SynceStrategy struct {
+	SyncStrategy struct {
 		Enable bool   `yaml:"enable"`
 		Topic  string `yaml:"topic"`
 	}
@@ -29,7 +29,7 @@ type (
 	Server struct {
 		Name     string            `yaml:"name"`
 		Mode     string            `yaml:"mode"`
-		Matadata map[string]string `yaml:"matadata"`
+		Metadata map[string]string `yaml:"metadata"`
 
 		// http ...
 		Http *Http `yaml:"http"`

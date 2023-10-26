@@ -27,7 +27,7 @@ type (
 
 	PushStrategy struct {
 		Enable   bool          `yaml:"enable"`
-		Intervel time.Duration `yaml:"intervel"`
+		Interval time.Duration `yaml:"interval"`
 		Topic    string        `yaml:"topic"`
 	}
 
@@ -44,7 +44,7 @@ type (
 	Server struct {
 		Name     string            `yaml:"name"`
 		Mode     string            `yaml:"mode"`
-		Matadata map[string]string `yaml:"matadata"`
+		Metadata map[string]string `yaml:"metadata"`
 
 		// http ...
 		Http *Http `yaml:"http"`

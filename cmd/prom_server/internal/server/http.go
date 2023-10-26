@@ -4,6 +4,10 @@ import (
 	"fmt"
 	"time"
 
+	ginplus "github.com/aide-cloud/gin-plus"
+	"github.com/gin-gonic/gin"
+	"github.com/go-kratos/kratos/v2/log"
+
 	"prometheus-manager/cmd/prom_server/internal/conf"
 	"prometheus-manager/cmd/prom_server/internal/service"
 	alarmHistory "prometheus-manager/cmd/prom_server/internal/service/alarm_history"
@@ -11,14 +15,11 @@ import (
 	promDict "prometheus-manager/cmd/prom_server/internal/service/prom_dict"
 	"prometheus-manager/cmd/prom_server/internal/service/strategy"
 	strategyGroup "prometheus-manager/cmd/prom_server/internal/service/strategy_group"
-
-	ginplus "github.com/aide-cloud/gin-plus"
-	"github.com/gin-gonic/gin"
-	"github.com/go-kratos/kratos/v2/log"
 )
 
-func NewHttpServer(server *conf.Server, looger log.Logger) *ginplus.GinEngine {
-	logHelper := log.NewHelper(log.With(looger, "module", "server/server"))
+func NewHttpServer(bc *conf.Bootstrap, logger log.Logger) *ginplus.GinEngine {
+	server := bc.GetServer()
+	logHelper := log.NewHelper(log.With(logger, "module", "server/server"))
 	logHelper.Infof("HttpServer starting")
 	middle := ginplus.NewMiddleware()
 	var r *gin.Engine
@@ -36,7 +37,7 @@ func NewHttpServer(server *conf.Server, looger log.Logger) *ginplus.GinEngine {
 		middle.Logger(server.Name, time.DateTime),
 	)
 
-	// 初始化ginplus实例
+	// 初始化gin-plus实例
 	ginplusEngine := ginplus.New(r,
 		ginplus.WithAddr(fmt.Sprintf("%s:%d", server.Http.Host, server.Http.Port)),
 		ginplus.AppendHttpMethodPrefixes(httpMethodPrefixes...),

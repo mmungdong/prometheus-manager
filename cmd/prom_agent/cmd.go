@@ -3,11 +3,11 @@ package main
 import (
 	"flag"
 
+	ginplus "github.com/aide-cloud/gin-plus"
+
 	"prometheus-manager/cmd/prom_agent/internal/server"
 	"prometheus-manager/pkg/hello"
 	"prometheus-manager/pkg/plog"
-
-	ginplus "github.com/aide-cloud/gin-plus"
 )
 
 var (
@@ -25,7 +25,7 @@ func main() {
 	// 初始化日志
 	logger := plog.NewLog()
 
-	hello.FmtASCIIGenerator(ServiceName, Version, bc.GetServer().GetMatadata())
+	hello.FmtASCIIGenerator(ServiceName, Version, bc.GetServer().GetMetadata())
 
 	svs := []ginplus.Server{
 		server.NewHttpServer(bc.GetServer(), logger),

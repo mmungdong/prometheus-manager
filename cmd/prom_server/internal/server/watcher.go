@@ -6,13 +6,13 @@ import (
 	"errors"
 	"time"
 
-	"prometheus-manager/cmd/prom_server/internal/conf"
-	"prometheus-manager/cmd/prom_server/internal/service/alert"
-	"prometheus-manager/pkg/conn"
-
 	ginplus "github.com/aide-cloud/gin-plus"
 	"github.com/confluentinc/confluent-kafka-go/v2/kafka"
 	"github.com/go-kratos/kratos/v2/log"
+
+	"prometheus-manager/cmd/prom_server/internal/conf"
+	"prometheus-manager/cmd/prom_server/internal/service/alert"
+	"prometheus-manager/pkg/conn"
 )
 
 type WatchServer struct {
@@ -26,11 +26,13 @@ type WatchServer struct {
 
 var _ ginplus.Server = (*WatchServer)(nil)
 
-func NewWatchServer(kafkaConf *conf.Kafka, alertConf *conf.Alert, logger log.Logger) *WatchServer {
+func NewWatchServer(bc *conf.Bootstrap, logger log.Logger) *WatchServer {
+	kafkaConf := bc.GetKafka()
+	alertConf := bc.GetAlert()
 	watchService := alert.NewAlert()
 	logHelper := log.NewHelper(log.With(logger, "module", "server/server"))
 	if !kafkaConf.GetEnable() {
-		logHelper.Warnf("Not enabel kafka")
+		logHelper.Warnf("Not enable kafka")
 		return &WatchServer{
 			logger:    logHelper,
 			alertConf: alertConf,
@@ -61,11 +63,10 @@ func (l *WatchServer) Start() error {
 		return nil
 	}
 	if l.consumer != nil {
-		l.consumer.Consume(func(msg *kafka.Message) (flag bool) {
+		l.consumer.Consume(func(msg *kafka.Message) bool {
 			ctx, cancel := context.WithTimeoutCause(context.Background(), 5*time.Second, errors.New("kafka消费超时"))
 			defer cancel()
-			flag = l.callbackFunc(ctx, msg)
-			return
+			return l.callbackFunc(ctx, msg)
 		})
 	}
 
@@ -75,7 +76,7 @@ func (l *WatchServer) Start() error {
 func (l *WatchServer) Stop() {
 	defer l.logger.Info("[WatchServer] server stopped")
 	if l.consumer != nil {
-		l.consumer.Close()
+		_ = l.consumer.Close()
 	}
 }
 
@@ -89,11 +90,11 @@ func (l *WatchServer) callbackFunc(ctx context.Context, msg *kafka.Message) (fla
 		return
 	}
 
-	alert, err := l.watchService.PostHook(ctx, &req)
+	hookResp, err := l.watchService.PostHook(ctx, &req)
 	if err != nil {
 		l.logger.Errorf("kafka消费失败: %v", err)
 		return
 	}
-	l.logger.Infof("kafka消费成功, %v", alert)
+	l.logger.Infof("kafka消费成功, %v", hookResp)
 	return
 }

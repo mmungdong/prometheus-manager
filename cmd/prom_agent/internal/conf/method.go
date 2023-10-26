@@ -29,11 +29,11 @@ func (c *Bootstrap) GetAlert() *Alert {
 	return c.Alert
 }
 
-func (c *Bootstrap) GetSynceStrategy() *SynceStrategy {
+func (c *Bootstrap) GetSyncStrategy() *SyncStrategy {
 	if c == nil {
 		return nil
 	}
-	return c.SynceStrategy
+	return c.SyncStrategy
 }
 
 func (c *Server) GetHttp() *Http {
@@ -57,11 +57,11 @@ func (c *Server) GetMode() string {
 	return c.Mode
 }
 
-func (c *Server) GetMatadata() map[string]string {
+func (c *Server) GetMetadata() map[string]string {
 	if c == nil {
 		return nil
 	}
-	return c.Matadata
+	return c.Metadata
 }
 
 func (c *Http) GetHost() string {
@@ -99,14 +99,14 @@ func (c *Alert) GetTopic() string {
 	return c.Topic
 }
 
-func (c *SynceStrategy) GetEnable() bool {
+func (c *SyncStrategy) GetEnable() bool {
 	if c == nil {
 		return false
 	}
 	return c.Enable
 }
 
-func (c *SynceStrategy) GetTopic() string {
+func (c *SyncStrategy) GetTopic() string {
 	if c == nil {
 		return ""
 	}

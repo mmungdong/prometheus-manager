@@ -2,6 +2,7 @@ package strategy
 
 import (
 	"context"
+
 	dataStrategy "prometheus-manager/cmd/prom_server/internal/data/strategy"
 	"prometheus-manager/pkg/alert"
 	"prometheus-manager/pkg/model"

@@ -29,9 +29,11 @@ func (l *Timer) Start() error {
 		for {
 			select {
 			case <-l.ticker.C:
-				ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
-				defer cancel()
-				l.call(ctx)
+				func() {
+					ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
+					defer cancel()
+					l.call(ctx)
+				}()
 			case <-l.stop:
 				return
 			}

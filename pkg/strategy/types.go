@@ -18,13 +18,13 @@ type Rule struct {
 	Annotations map[string]string `json:"annotations,omitempty"`
 }
 
-type StrategyDir struct {
+type Dir struct {
 	Dir        string      `json:"dir,omitempty"`
 	Strategies []*Strategy `json:"strategies,omitempty"`
 }
 
 // GetDir ...
-func (l *StrategyDir) GetDir() string {
+func (l *Dir) GetDir() string {
 	if l == nil {
 		return ""
 	}
@@ -32,7 +32,7 @@ func (l *StrategyDir) GetDir() string {
 }
 
 // GetStrategies ...
-func (l *StrategyDir) GetStrategies() []*Strategy {
+func (l *Dir) GetStrategies() []*Strategy {
 	if l == nil {
 		return nil
 	}

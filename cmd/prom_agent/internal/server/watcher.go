@@ -6,13 +6,13 @@ import (
 	"errors"
 	"time"
 
-	"prometheus-manager/cmd/prom_agent/internal/conf"
-	"prometheus-manager/cmd/prom_agent/internal/service/strategy"
-	"prometheus-manager/pkg/conn"
-
 	ginplus "github.com/aide-cloud/gin-plus"
 	"github.com/confluentinc/confluent-kafka-go/v2/kafka"
 	"github.com/go-kratos/kratos/v2/log"
+
+	"prometheus-manager/cmd/prom_agent/internal/conf"
+	"prometheus-manager/cmd/prom_agent/internal/service/strategy"
+	"prometheus-manager/pkg/conn"
 )
 
 var _ ginplus.Server = (*WatchServer)(nil)
@@ -22,34 +22,37 @@ type WatchServer struct {
 	logger       *log.Helper
 	consumer     *conn.KafkaConsumer
 
-	kafkaConf         *conf.Kafka
-	synceStrategyConf *conf.SynceStrategy
+	kafkaConf        *conf.Kafka
+	syncStrategyConf *conf.SyncStrategy
 }
 
-func NewWatchServer(kafkaConf *conf.Kafka, synceStrategyConf *conf.SynceStrategy, logger log.Logger) *WatchServer {
+// NewWatchServer 初始化监听mq消息的服务(kafka)
+func NewWatchServer(bc *conf.Bootstrap, logger log.Logger) *WatchServer {
+	kafkaConf := bc.GetKafka()
+	syncStrategyConf := bc.GetSyncStrategy()
 	watchService := strategy.NewStrategy()
 	logHelper := log.NewHelper(log.With(logger, "module", "server/server"))
 	if !kafkaConf.GetEnable() {
-		logHelper.Warnf("Not enabel kafka")
+		logHelper.Warnf("Not enable kafka")
 		return &WatchServer{
-			logger:            logHelper,
-			synceStrategyConf: synceStrategyConf,
-			kafkaConf:         kafkaConf,
+			logger:           logHelper,
+			syncStrategyConf: syncStrategyConf,
+			kafkaConf:        kafkaConf,
 		}
 	}
 
-	consumer, err := conn.NewKafkaConsumer(kafkaConf.GetEndpoints(), []string{synceStrategyConf.GetTopic()}, log.DefaultLogger)
+	consumer, err := conn.NewKafkaConsumer(kafkaConf.GetEndpoints(), []string{syncStrategyConf.GetTopic()}, log.DefaultLogger)
 	if err != nil {
 		logHelper.Error("kafka消费者初始化失败")
 		panic(err)
 	}
 
 	return &WatchServer{
-		watchService:      watchService,
-		logger:            logHelper,
-		consumer:          consumer,
-		synceStrategyConf: synceStrategyConf,
-		kafkaConf:         kafkaConf,
+		watchService:     watchService,
+		logger:           logHelper,
+		consumer:         consumer,
+		syncStrategyConf: syncStrategyConf,
+		kafkaConf:        kafkaConf,
 	}
 }
 
@@ -58,7 +61,7 @@ func (l *WatchServer) Start() error {
 	l.logger.Info("[WatchServer] server starting")
 
 	// 如果没有启用监听，则直接返回
-	if !l.synceStrategyConf.GetEnable() {
+	if !l.syncStrategyConf.GetEnable() {
 		return nil
 	}
 
@@ -79,7 +82,7 @@ func (l *WatchServer) Start() error {
 func (l *WatchServer) Stop() {
 	defer l.logger.Info("[WatchServer] server stopped")
 	if l.consumer != nil {
-		l.consumer.Close()
+		_ = l.consumer.Close()
 	}
 }
 

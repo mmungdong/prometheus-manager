@@ -20,8 +20,8 @@ type (
 		// add child module
 	}
 
-	// PromDictOption ...
-	PromDictOption func(*PromDict)
+	// Option ...
+	Option func(*PromDict)
 )
 
 // defaultPromDict ...
@@ -32,7 +32,7 @@ func defaultPromDict() *PromDict {
 }
 
 // NewPromDict ...
-func NewPromDict(opts ...PromDictOption) *PromDict {
+func NewPromDict(opts ...Option) *PromDict {
 	m := defaultPromDict()
 	for _, o := range opts {
 		o(m)

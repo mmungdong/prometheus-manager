@@ -4,15 +4,16 @@ import (
 	"context"
 	"time"
 
+	"github.com/go-kratos/kratos/v2/log"
+
 	"prometheus-manager/cmd/prom_server/internal/conf"
 	"prometheus-manager/cmd/prom_server/internal/service/strategy/publish"
 	"prometheus-manager/pkg/servers"
-
-	"github.com/go-kratos/kratos/v2/log"
 )
 
-func NewTimer(pushStrategy *conf.PushStrategy, logger log.Logger) *servers.Timer {
-	interval := pushStrategy.GetIntervel() * time.Second
+func NewTimeServer(bc *conf.Bootstrap, logger log.Logger) *servers.Timer {
+	pushStrategy := bc.GetPushStrategy()
+	interval := pushStrategy.GetInterval() * time.Second
 	ticker := time.NewTicker(interval)
 	loggerHelper := log.NewHelper(log.With(logger, "module", "server/Timer"))
 

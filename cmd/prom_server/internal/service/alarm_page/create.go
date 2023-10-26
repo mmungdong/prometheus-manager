@@ -2,10 +2,11 @@ package alarmPage
 
 import (
 	"context"
-	dataAlarmPage "prometheus-manager/cmd/prom_server/internal/data/alarm_page"
-	"prometheus-manager/pkg/model"
 
 	query "github.com/aide-cloud/gorm-normalize"
+
+	dataAlarmPage "prometheus-manager/cmd/prom_server/internal/data/alarm_page"
+	"prometheus-manager/pkg/model"
 )
 
 type (

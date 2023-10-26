@@ -1,10 +1,10 @@
 package dataAlarmPage
 
 import (
+	query "github.com/aide-cloud/gorm-normalize"
+
 	"prometheus-manager/pkg/conn"
 	"prometheus-manager/pkg/model"
-
-	query "github.com/aide-cloud/gorm-normalize"
 )
 
 type (
@@ -19,11 +19,11 @@ type (
 
 // NewAlarmPage new a AlarmPage instance
 func NewAlarmPage(opts ...AlarmPageOption) *AlarmPage {
-	AlarmPage := &AlarmPage{
+	page := &AlarmPage{
 		IAction: query.NewAction(query.WithDB[model.PromAlarmPage](conn.GetMysqlDB())),
 	}
 	for _, o := range opts {
-		o(AlarmPage)
+		o(page)
 	}
-	return AlarmPage
+	return page
 }

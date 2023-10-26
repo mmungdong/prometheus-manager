@@ -2,6 +2,7 @@ package alert
 
 import (
 	"context"
+
 	"prometheus-manager/pkg/alert"
 )
 

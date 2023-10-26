@@ -20,11 +20,11 @@ type (
 
 	// ListStrategyResp ...
 	ListStrategyResp struct {
-		List []*StrategyItem `json:"list"`
-		Page *query.Page     `json:"page"`
+		List []*Item     `json:"list"`
+		Page *query.Page `json:"page"`
 	}
 
-	StrategyItem struct {
+	Item struct {
 		ID    uint   `json:"id"`
 		Alert string `json:"alert"`
 		Expr  string `json:"expr"`
@@ -61,9 +61,9 @@ func (l *Strategy) List(ctx context.Context, req *ListStrategyReq) (*ListStrateg
 		return nil, err
 	}
 
-	list := make([]*StrategyItem, 0, len(strategies))
+	list := make([]*Item, 0, len(strategies))
 	for _, strategy := range strategies {
-		list = append(list, &StrategyItem{
+		list = append(list, &Item{
 			ID:          strategy.ID,
 			Alert:       strategy.Alert,
 			Expr:        strategy.Expr,
@@ -71,7 +71,7 @@ func (l *Strategy) List(ctx context.Context, req *ListStrategyReq) (*ListStrateg
 			Labels:      strategy.Labels,
 			Annotations: strategy.Annotations,
 			AlertLevel:  buildAlertLevelItem(strategy.AlertLevel),
-			GroupInfo:   buidGroupItem(strategy.GroupInfo),
+			GroupInfo:   buildGroupItem(strategy.GroupInfo),
 			CreatedAt:   times.TimeToUnix(strategy.CreatedAt),
 			UpdatedAt:   times.TimeToUnix(strategy.UpdatedAt),
 			DeletedAt:   int64(strategy.DeletedAt),

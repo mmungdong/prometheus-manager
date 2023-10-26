@@ -20,8 +20,8 @@ type (
 		// add child module
 	}
 
-	// AlarmHistoryOption ...
-	AlarmHistoryOption func(*AlarmHistory)
+	// Option ...
+	Option func(*AlarmHistory)
 )
 
 // defaultAlarmHistory ...
@@ -32,7 +32,7 @@ func defaultAlarmHistory() *AlarmHistory {
 }
 
 // NewAlarmHistory ...
-func NewAlarmHistory(opts ...AlarmHistoryOption) *AlarmHistory {
+func NewAlarmHistory(opts ...Option) *AlarmHistory {
 	m := defaultAlarmHistory()
 	for _, o := range opts {
 		o(m)

@@ -1,10 +1,10 @@
 package dataStrategyGroup
 
 import (
+	query "github.com/aide-cloud/gorm-normalize"
+
 	"prometheus-manager/pkg/conn"
 	"prometheus-manager/pkg/model"
-
-	query "github.com/aide-cloud/gorm-normalize"
 )
 
 type (
@@ -22,14 +22,14 @@ type (
 
 // NewStrategyGroup new a StrategyGroup instance
 func NewStrategyGroup(opts ...StrategyGroupOption) *StrategyGroup {
-	strategy_group := &StrategyGroup{
+	strategyGroup := &StrategyGroup{
 		IAction:                  query.NewAction(query.WithDB[model.PromGroup](conn.GetMysqlDB())),
 		PreloadCategoriesKey:     "Categories",
 		PreloadPromStrategiesKey: "PromStrategies",
 	}
 	for _, o := range opts {
-		o(strategy_group)
+		o(strategyGroup)
 	}
 
-	return strategy_group
+	return strategyGroup
 }

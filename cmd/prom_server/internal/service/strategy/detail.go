@@ -82,7 +82,7 @@ func (l *Strategy) Detail(ctx context.Context, req *DetailStrategyReq) (*DetailS
 		AlertLevel:  buildAlertLevelItem(detailInfo.AlertLevel),
 		AlarmPages:  buildAlarmPageItems(detailInfo.AlarmPages),
 		Categories:  buildCategoryItems(detailInfo.Categories),
-		Group:       buidGroupItem(detailInfo.GroupInfo),
+		Group:       buildGroupItem(detailInfo.GroupInfo),
 		Status:      detailInfo.Status,
 		CreatedAt:   times.TimeToUnix(detailInfo.CreatedAt),
 		UpdatedAt:   times.TimeToUnix(detailInfo.UpdatedAt),
@@ -90,7 +90,7 @@ func (l *Strategy) Detail(ctx context.Context, req *DetailStrategyReq) (*DetailS
 	}, nil
 }
 
-func buidGroupItem(group *model.PromGroup) *GroupItem {
+func buildGroupItem(group *model.PromGroup) *GroupItem {
 	if group == nil {
 		return nil
 	}

@@ -1,9 +1,9 @@
 package main
 
 import (
-	"prometheus-manager/cmd/prom_agent/internal/conf"
-
 	ginplus "github.com/aide-cloud/gin-plus"
+	
+	"prometheus-manager/cmd/prom_agent/internal/conf"
 )
 
 func Init() *conf.Bootstrap {

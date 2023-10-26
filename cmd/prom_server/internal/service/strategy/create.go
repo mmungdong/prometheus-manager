@@ -4,6 +4,7 @@ import (
 	"context"
 
 	query "github.com/aide-cloud/gorm-normalize"
+
 	dataStrategy "prometheus-manager/cmd/prom_server/internal/data/strategy"
 	"prometheus-manager/pkg/alert"
 	"prometheus-manager/pkg/model"
