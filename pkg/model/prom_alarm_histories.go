@@ -11,7 +11,7 @@ const TableNamePromAlarmHistory = "prom_alarm_histories"
 // PromAlarmHistory mapped from table <prom_alarm_histories>
 type PromAlarmHistory struct {
 	query.BaseModel
-	Node       string           `gorm:"column:node;type:varchar(64);not null;comment:node名称" json:"node"`                                                        // node名称
+	Instance   string           `gorm:"column:instance;type:varchar(64);not null;comment:instance名称" json:"instance"`                                            // node名称
 	Status     string           `gorm:"column:status;type:varchar(16);not null;comment:告警消息状态, 报警和恢复" json:"status"`                                             // 告警消息状态, 报警和恢复
 	Info       string           `gorm:"column:info;type:json;not null;comment:原始告警消息" json:"info"`                                                               // 原始告警消息
 	CreatedAt  time.Time        `gorm:"column:created_at;type:timestamp;not null;default:CURRENT_TIMESTAMP;comment:创建时间" json:"created_at"`                      // 创建时间

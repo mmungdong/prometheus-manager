@@ -139,3 +139,8 @@ func TestKV_Value(t *testing.T) {
 		})
 	}
 }
+
+func TestAlert_String(t *testing.T) {
+	al := &Alert{}
+	t.Log(al.String())
+}

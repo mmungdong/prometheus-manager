@@ -4,11 +4,21 @@ import (
 	"database/sql"
 	"database/sql/driver"
 	"encoding/json"
+	"fmt"
+
+	"prometheus-manager/pkg/util/stringer"
 )
 
 var (
 	_ driver.Valuer = (*KV)(nil)
 	_ sql.Scanner   = (*KV)(nil)
+	_ fmt.Stringer  = (*Alert)(nil)
+)
+
+const (
+	// LabelStrategyID 策略ID
+	LabelStrategyID = "strategy_id"
+	LabelInstance   = "instance"
 )
 
 type (
@@ -43,6 +53,16 @@ type (
 		TruncatedAlerts   int32             `json:"truncatedAlerts" form:"truncatedAlerts"`
 	}
 )
+
+func (l *Alert) String() string {
+	str, _ := json.Marshal(l)
+	return string(str)
+}
+
+// HashKey 告警的唯一标识
+func (l *Alert) HashKey() string {
+	return fmt.Sprintf("%d-%s-%s", l.Labels.GetStrategyID(), l.Labels.GetInstance(), l.Fingerprint)
+}
 
 func (l KV) Scan(src any) error {
 	return json.Unmarshal(src.([]byte), &l)
@@ -89,4 +109,17 @@ func (l KV) Byte() []byte {
 
 func (l KV) String() string {
 	return string(l.Byte())
+}
+
+// GetStrategyID 获取策略ID, 从标签中获取
+func (l Labels) GetStrategyID() int32 {
+	if v, ok := l[LabelStrategyID]; ok {
+		return stringer.ParseInt32(v)
+	}
+	return 0
+}
+
+// GetInstance 获取实例, 从标签中获取
+func (l Labels) GetInstance() string {
+	return l[LabelInstance]
 }
