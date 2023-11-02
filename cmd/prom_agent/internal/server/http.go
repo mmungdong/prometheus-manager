@@ -32,7 +32,7 @@ func NewHttpServer(server *conf.Server, logger log.Logger) *ginplus.GinEngine {
 		middle.Logger(server.Name, time.DateTime),
 	)
 
-	// 初始化ginplus实例
+	// 初始化gin-plus实例
 	ginplusEngine := ginplus.New(r,
 		ginplus.WithAddr(fmt.Sprintf("%s:%d", server.Http.Host, server.Http.Port)),
 		ginplus.AppendHttpMethodPrefixes(httpMethodPrefixes...),

@@ -10,8 +10,8 @@ var _ IAlert = (*Alert)(nil)
 type (
 	// IAlert ...
 	IAlert interface {
-		ginplus.Middlewarer
-		ginplus.MethoderMiddlewarer
+		ginplus.IMiddleware
+		ginplus.MethodeMiddleware
 		// add interface method
 	}
 
@@ -51,8 +51,8 @@ func (l *Alert) Middlewares() []gin.HandlerFunc {
 	}
 }
 
-// MethoderMiddlewares ...
-func (l *Alert) MethoderMiddlewares() map[string][]gin.HandlerFunc {
+// MethodeMiddlewares ...
+func (l *Alert) MethodeMiddlewares() map[string][]gin.HandlerFunc {
 	return map[string][]gin.HandlerFunc{
 		// your method middlewares
 	}
