@@ -16,8 +16,8 @@ var _ IApi = (*Api)(nil)
 type (
 	// IApi ...
 	IApi interface {
-		ginplus.Middlewarer
-		ginplus.MethoderMiddlewarer
+		ginplus.IMiddleware
+		ginplus.MethodeMiddleware
 		// add interface method
 	}
 
@@ -62,8 +62,8 @@ func (l *Api) Middlewares() []gin.HandlerFunc {
 	}
 }
 
-// MethoderMiddlewares ...
-func (l *Api) MethoderMiddlewares() map[string][]gin.HandlerFunc {
+// MethodeMiddlewares ...
+func (l *Api) MethodeMiddlewares() map[string][]gin.HandlerFunc {
 	return map[string][]gin.HandlerFunc{
 		// your method middlewares
 	}

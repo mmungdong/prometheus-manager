@@ -10,8 +10,8 @@ var _ IPromDict = (*PromDict)(nil)
 type (
 	// IPromDict ...
 	IPromDict interface {
-		ginplus.Middlewarer
-		ginplus.MethoderMiddlewarer
+		ginplus.IMiddleware
+		ginplus.MethodeMiddleware
 		// add interface method
 	}
 
@@ -51,8 +51,8 @@ func (l *PromDict) Middlewares() []gin.HandlerFunc {
 	}
 }
 
-// MethoderMiddlewares ...
-func (l *PromDict) MethoderMiddlewares() map[string][]gin.HandlerFunc {
+// MethodeMiddlewares ...
+func (l *PromDict) MethodeMiddlewares() map[string][]gin.HandlerFunc {
 	return map[string][]gin.HandlerFunc{
 		// your method middlewares
 	}

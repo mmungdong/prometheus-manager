@@ -10,8 +10,8 @@ var _ IPublish = (*Publish)(nil)
 type (
 	// IPublish ...
 	IPublish interface {
-		ginplus.Middlewarer
-		ginplus.MethoderMiddlewarer
+		ginplus.IMiddleware
+		ginplus.MethodeMiddleware
 		// add interface method
 	}
 
@@ -51,8 +51,8 @@ func (l *Publish) Middlewares() []gin.HandlerFunc {
 	}
 }
 
-// MethoderMiddlewares ...
-func (l *Publish) MethoderMiddlewares() map[string][]gin.HandlerFunc {
+// MethodeMiddlewares ...
+func (l *Publish) MethodeMiddlewares() map[string][]gin.HandlerFunc {
 	return map[string][]gin.HandlerFunc{
 		// your method middlewares
 	}

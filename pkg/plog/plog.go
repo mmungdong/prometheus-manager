@@ -13,18 +13,18 @@ type Log struct {
 }
 
 // Log implements log.Logger.
-func (*Log) Log(level log.Level, keyvals ...interface{}) error {
+func (*Log) Log(level log.Level, keyVales ...interface{}) error {
 	switch level {
 	case log.LevelDebug:
-		ginplus.Logger().Sugar().Debug(keyvals...)
+		ginplus.Logger().Sugar().Debug(keyVales...)
 	case log.LevelInfo:
-		ginplus.Logger().Sugar().Info(keyvals...)
+		ginplus.Logger().Sugar().Info(keyVales...)
 	case log.LevelWarn:
-		ginplus.Logger().Sugar().Warn(keyvals...)
+		ginplus.Logger().Sugar().Warn(keyVales...)
 	case log.LevelError:
-		ginplus.Logger().Sugar().Error(keyvals...)
+		ginplus.Logger().Sugar().Error(keyVales...)
 	case log.LevelFatal:
-		ginplus.Logger().Sugar().Fatal(keyvals...)
+		ginplus.Logger().Sugar().Fatal(keyVales...)
 	}
 	return nil
 }

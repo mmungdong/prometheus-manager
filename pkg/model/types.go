@@ -12,11 +12,19 @@ type (
 const unknown = "未知"
 
 func (s Status) String() string {
-	return unknown
+	switch s {
+	case Enable:
+		return "启用"
+	default:
+		return unknown
+	}
 }
 
 func (c Category) String() string {
-	return unknown
+	switch c {
+	default:
+		return unknown
+	}
 }
 
 var _ fmt.Stringer = (*Category)(nil)

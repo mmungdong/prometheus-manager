@@ -10,8 +10,8 @@ var _ IStrategy = (*Strategy)(nil)
 type (
 	// IStrategy ...
 	IStrategy interface {
-		ginplus.Middlewarer
-		ginplus.MethoderMiddlewarer
+		ginplus.IMiddleware
+		ginplus.MethodeMiddleware
 		// add interface method
 	}
 
@@ -51,8 +51,8 @@ func (l *Strategy) Middlewares() []gin.HandlerFunc {
 	}
 }
 
-// MethoderMiddlewares ...
-func (l *Strategy) MethoderMiddlewares() map[string][]gin.HandlerFunc {
+// MethodeMiddlewares ...
+func (l *Strategy) MethodeMiddlewares() map[string][]gin.HandlerFunc {
 	return map[string][]gin.HandlerFunc{
 		// your method middlewares
 	}
