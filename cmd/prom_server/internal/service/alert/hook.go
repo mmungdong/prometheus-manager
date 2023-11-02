@@ -31,7 +31,7 @@ func (l *Alert) PostHook(ctx context.Context, req *HookReq) (*HookResp, error) {
 	historyDataList := make([]*model.PromAlarmHistory, 0, len(req.Alerts))
 	for _, alertItem := range req.Alerts {
 		startAt := alert.ParseTime(alertItem.StartsAt).Unix()
-		endAt := int64(0)
+		var endAt int64
 		duration := time.Now().Unix() - startAt
 		if alertItem.EndsAt != "" {
 			endAt = alert.ParseTime(alertItem.EndsAt).Unix()
