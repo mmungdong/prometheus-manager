@@ -41,28 +41,28 @@ func NewStrategy(opts ...StrategyOption) *Strategy {
 }
 
 // PreloadAlarmPages preload alarm_pages
-func (l *Strategy) PreloadAlarmPages() query.Scopemethod {
+func (l *Strategy) PreloadAlarmPages() query.ScopeMethod {
 	return func(db *gorm.DB) *gorm.DB {
 		return db.Preload(string(l.PreloadAlarmPagesKey))
 	}
 }
 
 // PreloadCategories preload categories
-func (l *Strategy) PreloadCategories() query.Scopemethod {
+func (l *Strategy) PreloadCategories() query.ScopeMethod {
 	return func(db *gorm.DB) *gorm.DB {
 		return db.Preload(string(l.PreloadCategoriesKey))
 	}
 }
 
 // PreloadAlertLevel preload alert_level
-func (l *Strategy) PreloadAlertLevel() query.Scopemethod {
+func (l *Strategy) PreloadAlertLevel() query.ScopeMethod {
 	return func(db *gorm.DB) *gorm.DB {
 		return db.Preload(string(l.PreloadAlertLevelKey))
 	}
 }
 
 // PreloadGroupInfo preload group_info
-func (l *Strategy) PreloadGroupInfo() query.Scopemethod {
+func (l *Strategy) PreloadGroupInfo() query.ScopeMethod {
 	return func(db *gorm.DB) *gorm.DB {
 		return db.Preload(string(l.PreloadGroupInfoKey))
 	}

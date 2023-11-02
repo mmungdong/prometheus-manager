@@ -1,14 +1,15 @@
 package service
 
 import (
+	ginplus "github.com/aide-cloud/gin-plus"
+	"github.com/gin-gonic/gin"
+
 	alarmHistory "prometheus-manager/cmd/prom_server/internal/service/alarm_history"
 	alarmPage "prometheus-manager/cmd/prom_server/internal/service/alarm_page"
+	"prometheus-manager/cmd/prom_server/internal/service/alert"
 	promDict "prometheus-manager/cmd/prom_server/internal/service/prom_dict"
 	"prometheus-manager/cmd/prom_server/internal/service/strategy"
 	strategyGroup "prometheus-manager/cmd/prom_server/internal/service/strategy_group"
-
-	ginplus "github.com/aide-cloud/gin-plus"
-	"github.com/gin-gonic/gin"
 )
 
 var _ IApi = (*Api)(nil)
@@ -29,6 +30,7 @@ type (
 		PromDict      *promDict.PromDict
 		AlarmPage     *alarmPage.AlarmPage
 		History       *alarmHistory.AlarmHistory
+		Alert         *alert.Alert
 	}
 
 	// ApiOption ...

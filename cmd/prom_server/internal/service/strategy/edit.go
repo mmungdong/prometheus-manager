@@ -51,22 +51,22 @@ func (l *Strategy) Edit(ctx context.Context, req *EditStrategyReq) (*EditStrateg
 	for _, alarmPageId := range req.AlarmPageIds {
 		alarmPages = append(alarmPages, &model.PromAlarmPage{BaseModel: query.BaseModel{ID: alarmPageId}})
 	}
-	promDicts := make([]schema.Tabler, 0, len(req.PromDictIds))
+	promDictList := make([]schema.Tabler, 0, len(req.PromDictIds))
 	for _, promDictId := range req.PromDictIds {
-		promDicts = append(promDicts, &model.PromDict{BaseModel: query.BaseModel{ID: promDictId}})
+		promDictList = append(promDictList, &model.PromDict{BaseModel: query.BaseModel{ID: promDictId}})
 	}
 
 	err = strategyData.DB().Transaction(func(tx *gorm.DB) error {
-		if err := strategyData.WithDB(tx).WithContext(ctx).UpdateMapByID(req.ID, updateMap); err != nil {
+		if err = strategyData.WithDB(tx).WithContext(ctx).UpdateMapByID(req.ID, updateMap); err != nil {
 			return err
 		}
 
 		// 替换关联
-		if err := strategyData.WithDB(tx).WithContext(ctx).Scopes(query.WhereID(req.ID)).Association().Replace(strategyData.PreloadAlarmPagesKey, alarmPages...); err != nil {
+		if err = strategyData.WithDB(tx).WithContext(ctx).Scopes(query.WhereID(req.ID)).AssociationReplace(strategyData.PreloadAlarmPagesKey, alarmPages...); err != nil {
 			return err
 		}
 
-		if err := strategyData.WithDB(tx).WithContext(ctx).Scopes(query.WhereID(req.ID)).Association().Replace(strategyData.PreloadCategoriesKey, promDicts...); err != nil {
+		if err = strategyData.WithDB(tx).WithContext(ctx).Scopes(query.WhereID(req.ID)).AssociationReplace(strategyData.PreloadCategoriesKey, promDictList...); err != nil {
 			return err
 		}
 
@@ -107,11 +107,11 @@ func buildUpdateMap(req *EditStrategyReq, firstDetail *model.PromStrategy) map[s
 		alarmPages = append(alarmPages, &model.PromAlarmPage{BaseModel: query.BaseModel{ID: alarmPageId}})
 	}
 	updateMap["alarm_pages"] = alarmPages
-	promDicts := make([]*model.PromDict, 0, len(req.PromDictIds))
+	promDictList := make([]*model.PromDict, 0, len(req.PromDictIds))
 	for _, promDictId := range req.PromDictIds {
-		promDicts = append(promDicts, &model.PromDict{BaseModel: query.BaseModel{ID: promDictId}})
+		promDictList = append(promDictList, &model.PromDict{BaseModel: query.BaseModel{ID: promDictId}})
 	}
-	updateMap["categories"] = promDicts
+	updateMap["categories"] = promDictList
 
 	return updateMap
 }

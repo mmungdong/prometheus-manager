@@ -37,19 +37,19 @@ type (
 
 // PostList ...
 func (l *StrategyGroup) PostList(ctx context.Context, req *ListReq) (*ListResp, error) {
-	strategyGrouData := dataStrategyGroup.NewStrategyGroup()
+	strategyGroupData := dataStrategyGroup.NewStrategyGroup()
 
 	pgInfo := query.NewPage(req.Curr, req.Size)
-	wheres := []query.Scopemethod{query.WhereLikeKeyword(req.Keyword, "name")}
+	wheres := []query.ScopeMethod{query.WhereLikeKeyword(req.Keyword, "name")}
 
 	var err error
 	var strategyGroups []*model.PromGroup
 
 	// 查询
 	if req.IsDelete {
-		strategyGroups, err = strategyGrouData.WithContext(ctx).ListWithTrashed(pgInfo, wheres...)
+		strategyGroups, err = strategyGroupData.WithContext(ctx).ListWithTrashed(pgInfo, wheres...)
 	} else {
-		strategyGroups, err = strategyGrouData.WithContext(ctx).List(pgInfo, wheres...)
+		strategyGroups, err = strategyGroupData.WithContext(ctx).List(pgInfo, wheres...)
 	}
 
 	if err != nil {

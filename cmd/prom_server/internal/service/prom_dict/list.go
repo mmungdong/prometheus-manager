@@ -51,7 +51,7 @@ func (l *PromDict) List(ctx context.Context, req *ListReq) (*ListResp, error) {
 	var err error
 	pgInfo := query.NewPage(req.Curr, req.Size)
 
-	wheres := []query.Scopemethod{query.WhereLikeKeyword(req.Keyword, "name")}
+	wheres := []query.ScopeMethod{query.WhereLikeKeyword(req.Keyword, "name")}
 
 	if req.IsDelete {
 		list, err = dictData.WithContext(ctx).ListWithTrashed(pgInfo, wheres...)

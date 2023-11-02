@@ -48,7 +48,7 @@ type (
 func (l *Strategy) List(ctx context.Context, req *ListStrategyReq) (*ListStrategyResp, error) {
 	strategyData := dataStrategy.NewStrategy()
 
-	wheres := []query.Scopemethod{
+	wheres := []query.ScopeMethod{
 		query.WhereLikeKeyword(req.Keyword, "alert"),
 		strategyData.PreloadAlertLevel(),
 		strategyData.PreloadGroupInfo(),

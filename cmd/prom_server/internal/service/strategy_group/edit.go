@@ -33,10 +33,10 @@ type (
 
 // Edit ...
 func (l *StrategyGroup) Edit(ctx context.Context, req *EditReq) (*EditResp, error) {
-	strtegyGroupData := dataStrategyGroup.NewStrategyGroup()
+	strategyGroupData := dataStrategyGroup.NewStrategyGroup()
 
 	// 查询策略组
-	strategyGroup, err := strtegyGroupData.WithContext(ctx).FirstByID(req.ID)
+	strategyGroup, err := strategyGroupData.WithContext(ctx).FirstByID(req.ID)
 	if err != nil {
 		return nil, err
 	}
@@ -48,15 +48,15 @@ func (l *StrategyGroup) Edit(ctx context.Context, req *EditReq) (*EditResp, erro
 
 	updateMapData := buildEditStrategyGroupMap(req, strategyGroup)
 
-	err = strtegyGroupData.DB().Transaction(func(tx *gorm.DB) error {
+	err = strategyGroupData.DB().Transaction(func(tx *gorm.DB) error {
 		if len(updateMapData) > 0 {
-			if err := strtegyGroupData.WithDB(tx).WithContext(ctx).UpdateMapByID(req.ID, updateMapData); err != nil {
+			if err = strategyGroupData.WithDB(tx).WithContext(ctx).UpdateMapByID(req.ID, updateMapData); err != nil {
 				return err
 			}
 		}
 
 		// 替换关联
-		if err := strtegyGroupData.WithDB(tx).WithContext(ctx).Association().Replace(strtegyGroupData.PreloadCategoriesKey, categories...); err != nil {
+		if err = strategyGroupData.WithDB(tx).WithContext(ctx).AssociationReplace(strategyGroupData.PreloadCategoriesKey, categories...); err != nil {
 			return err
 		}
 		return nil
