@@ -11,7 +11,7 @@ type (
 	// DetailReq ...
 	DetailReq struct {
 		// add request params
-		ID uint `uri:"id" binding:"required"`
+		ID uint `uri:"id"`
 
 		IsDelete bool `form:"is_delete"`
 	}

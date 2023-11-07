@@ -1,8 +1,14 @@
 package strategyGroup
 
 import (
+	"context"
+	"mime/multipart"
+	"os"
+
 	ginplus "github.com/aide-cloud/gin-plus"
 	"github.com/gin-gonic/gin"
+	"prometheus-manager/pkg/model"
+	"prometheus-manager/pkg/strategy"
 )
 
 var _ IStrategyGroup = (*StrategyGroup)(nil)
@@ -18,6 +24,25 @@ type (
 	// StrategyGroup ...
 	StrategyGroup struct {
 		// add child module
+		groupRepository GroupRepository
+	}
+
+	// GroupRepository ...
+	GroupRepository interface {
+		GroupImportRepository
+		GroupExportRepository
+	}
+
+	// GroupImportRepository ...
+	GroupImportRepository interface {
+		ParseStrategyGroupFile(ctx context.Context, yamlFiles []*multipart.FileHeader) ([]*model.PromGroup, error)
+		BatchCreateStrategyGroup(ctx context.Context, groups []*model.PromGroup) error
+	}
+
+	// GroupExportRepository ...
+	GroupExportRepository interface {
+		GetStrategyGroupDetailById(ctx context.Context, id uint) (*model.PromGroup, error)
+		ExportStrategyGroupFile(ctx context.Context, groupDetail *strategy.Group) (*os.File, error)
 	}
 
 	// Option ...
@@ -27,7 +52,7 @@ type (
 // defaultStrategyGroup ...
 func defaultStrategyGroup() *StrategyGroup {
 	return &StrategyGroup{
-		// add child module
+		//groupRepository: repository_impl.NewGroupRepository(),
 	}
 }
 
@@ -55,5 +80,12 @@ func (l *StrategyGroup) Middlewares() []gin.HandlerFunc {
 func (l *StrategyGroup) MethodeMiddlewares() map[string][]gin.HandlerFunc {
 	return map[string][]gin.HandlerFunc{
 		// your method middlewares
+	}
+}
+
+// WithGroupRepository ...
+func WithGroupRepository(repository GroupRepository) Option {
+	return func(m *StrategyGroup) {
+		m.groupRepository = repository
 	}
 }

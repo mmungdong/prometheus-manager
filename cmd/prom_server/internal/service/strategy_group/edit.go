@@ -56,7 +56,7 @@ func (l *StrategyGroup) Edit(ctx context.Context, req *EditReq) (*EditResp, erro
 		}
 
 		// 替换关联
-		if err = strategyGroupData.WithDB(tx).WithContext(ctx).AssociationReplace(strategyGroupData.PreloadCategoriesKey, categories...); err != nil {
+		if err = strategyGroupData.WithDB(tx).WithContext(ctx).AssociationReplace(query.AssociationKey(strategyGroupData.PreloadCategoriesKey), categories...); err != nil {
 			return err
 		}
 		return nil

@@ -639,6 +639,31 @@ paths:
                                     title: PromDictIds
                                     items:
                                         type: integer
+    /api/strategy/import:
+        post:
+            operationId: PostImport
+            responses:
+                200:
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    group_count:
+                                        type: integer
+                                        title: GroupCount
+            parameters:
+                - name: rule_yaml_file
+                  in: query
+                  schema:
+                    type: array
+                    title: RuleYamlFiles
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
     /api/strategy/list:
         get:
             operationId: List
@@ -877,6 +902,45 @@ paths:
                                 status:
                                     type: object
                                     title: Status
+    /api/strategyGroup/import:
+        post:
+            operationId: PostImport
+            responses:
+                200:
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    fail_list:
+                                        type: array
+                                        title: FailList
+                                        items:
+                                            type: string
+                                    fail_total:
+                                        type: integer
+                                        title: FailTotal
+                                    group_count:
+                                        type: integer
+                                        title: GroupCount
+                                    strategy_count:
+                                        type: integer
+                                        title: StrategyCount
+                                    success_total:
+                                        type: integer
+                                        title: SuccessTotal
+            parameters:
+                - name: rule_yaml_file
+                  in: query
+                  schema:
+                    type: array
+                    title: RuleYamlFiles
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
     /api/strategyGroup/list:
         post:
             operationId: PostList

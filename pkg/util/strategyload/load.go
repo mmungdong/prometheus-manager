@@ -33,21 +33,22 @@ func (l *Strategy) load() error {
 }
 
 func (l *Strategy) Scan(ctx context.Context, v *[]*strategy.Strategy) error {
-	_, span := otel.Tracer("strategyload/load").Start(ctx, "Strategy.Scan")
+	_, span := otel.Tracer("strategy/load").Start(ctx, "Strategy.Scan")
 	defer span.End()
 	if err := l.load(); err != nil {
 		return err
 	}
 
-	viper.SetConfigType("yaml")
+	vi := viper.New()
+	vi.SetConfigType("yaml")
 
 	for _, kv := range l.kvs {
 		var tmp strategy.Strategy
-		if err := viper.ReadConfig(bytes.NewBuffer(kv.Value)); err != nil {
+		if err := vi.ReadConfig(bytes.NewBuffer(kv.Value)); err != nil {
 			return err
 		}
 
-		if err := viper.Unmarshal(&tmp); err != nil {
+		if err := vi.Unmarshal(&tmp); err != nil {
 			return err
 		}
 

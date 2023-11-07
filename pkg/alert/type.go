@@ -64,11 +64,11 @@ func (l *Alert) HashKey() string {
 	return fmt.Sprintf("%d-%s-%s", l.Labels.GetStrategyID(), l.Labels.GetInstance(), l.Fingerprint)
 }
 
-func (l KV) Scan(src any) error {
+func (l *KV) Scan(src any) error {
 	return json.Unmarshal(src.([]byte), &l)
 }
 
-func (l KV) Value() (driver.Value, error) {
+func (l *KV) Value() (driver.Value, error) {
 	if l == nil {
 		return "{}", nil
 	}
@@ -85,12 +85,12 @@ func (l *Data) Byte() []byte {
 	return b
 }
 
-func (l KV) Equal(r KV) bool {
-	if len(l) != len(r) {
+func (l *KV) Equal(r KV) bool {
+	if len(*l) != len(r) {
 		return false
 	}
 
-	for k, v := range l {
+	for k, v := range *l {
 		if r[k] != v {
 			return false
 		}
@@ -99,7 +99,7 @@ func (l KV) Equal(r KV) bool {
 	return true
 }
 
-func (l KV) Byte() []byte {
+func (l *KV) Byte() []byte {
 	if l == nil {
 		return nil
 	}
@@ -107,19 +107,21 @@ func (l KV) Byte() []byte {
 	return b
 }
 
-func (l KV) String() string {
+func (l *KV) String() string {
 	return string(l.Byte())
 }
 
 // GetStrategyID 获取策略ID, 从标签中获取
-func (l Labels) GetStrategyID() int32 {
-	if v, ok := l[LabelStrategyID]; ok {
+func (l *Labels) GetStrategyID() int32 {
+	label := *l
+	if v, ok := label[LabelStrategyID]; ok {
 		return stringer.ParseInt32(v)
 	}
 	return 0
 }
 
 // GetInstance 获取实例, 从标签中获取
-func (l Labels) GetInstance() string {
-	return l[LabelInstance]
+func (l *Labels) GetInstance() string {
+	label := *l
+	return label[LabelInstance]
 }

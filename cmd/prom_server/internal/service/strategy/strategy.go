@@ -1,8 +1,12 @@
 package strategy
 
 import (
+	"context"
+	"mime/multipart"
+
 	ginplus "github.com/aide-cloud/gin-plus"
 	"github.com/gin-gonic/gin"
+	"prometheus-manager/pkg/model"
 )
 
 var _ IStrategy = (*Strategy)(nil)
@@ -18,16 +22,25 @@ type (
 	// Strategy ...
 	Strategy struct {
 		// add child module
+		strategyRepository Repository
 	}
 
 	// Option ...
 	Option func(*Strategy)
+
+	// Repository ...
+	Repository interface {
+		// ParseStrategyFiles 解析策略文件
+		ParseStrategyFiles(ctx context.Context, yamlFiles []*multipart.FileHeader) ([]*model.PromStrategy, error)
+		// BatchCreateStrategy 批量创建策略
+		BatchCreateStrategy(ctx context.Context, strategies []*model.PromStrategy) error
+	}
 )
 
 // defaultStrategy ...
 func defaultStrategy() *Strategy {
 	return &Strategy{
-		// add child module
+		//strategyRepository: repository_impl.NewStrategyRepository(),
 	}
 }
 
@@ -55,5 +68,12 @@ func (l *Strategy) Middlewares() []gin.HandlerFunc {
 func (l *Strategy) MethodeMiddlewares() map[string][]gin.HandlerFunc {
 	return map[string][]gin.HandlerFunc{
 		// your method middlewares
+	}
+}
+
+// WithStrategyRepository ...
+func WithStrategyRepository(repository Repository) Option {
+	return func(m *Strategy) {
+		m.strategyRepository = repository
 	}
 }

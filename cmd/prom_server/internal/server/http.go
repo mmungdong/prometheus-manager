@@ -7,6 +7,8 @@ import (
 	ginplus "github.com/aide-cloud/gin-plus"
 	"github.com/gin-gonic/gin"
 	"github.com/go-kratos/kratos/v2/log"
+	strategyrepositoryimpl "prometheus-manager/cmd/prom_server/internal/data/strategy/repository_impl"
+	strategygrouprepositoryimpl "prometheus-manager/cmd/prom_server/internal/data/strategy_group/repository_impl"
 
 	"prometheus-manager/cmd/prom_server/internal/conf"
 	"prometheus-manager/cmd/prom_server/internal/service"
@@ -44,8 +46,20 @@ func NewHttpServer(bc *conf.Bootstrap, logger log.Logger) *ginplus.GinEngine {
 		// 注册api模块
 		ginplus.WithControllers(
 			service.NewApi(
-				service.WithStrategyApi(strategy.NewStrategy()),
-				service.WithStrategyGroupApi(strategyGroup.NewStrategyGroup()),
+				service.WithStrategyApi(
+					strategy.NewStrategy(
+						strategy.WithStrategyRepository(
+							strategyrepositoryimpl.NewStrategyRepository(),
+						),
+					),
+				),
+				service.WithStrategyGroupApi(
+					strategyGroup.NewStrategyGroup(
+						strategyGroup.WithGroupRepository(
+							strategygrouprepositoryimpl.NewGroupRepository(),
+						),
+					),
+				),
 				service.WithPromDictApi(promDict.NewPromDict()),
 				service.WithAlarmPageApi(alarmPage.NewAlarmPage()),
 				service.WithAlarmHistoryApi(alarmHistory.NewAlarmHistory()),

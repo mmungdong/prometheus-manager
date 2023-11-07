@@ -12,8 +12,8 @@ type (
 	StrategyGroup struct {
 		query.IAction[model.PromGroup]
 
-		PreloadCategoriesKey     query.AssociationKey
-		PreloadPromStrategiesKey query.AssociationKey
+		PreloadCategoriesKey     string
+		PreloadPromStrategiesKey string
 	}
 
 	// StrategyGroupOption ...
