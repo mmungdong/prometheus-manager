@@ -18,18 +18,7 @@ type (
 
 	// DetailResp ...
 	DetailResp struct {
-		ID             uint                `json:"id"`
-		Name           string              `json:"name"`
-		Remark         string              `json:"remark"`
-		Icon           string              `json:"icon"`
-		Color          string              `json:"color"`
-		Status         model.Status        `json:"status"`
-		PromStrategies []*PromStrategyItem `json:"prom_strategies"`
-	}
-
-	PromStrategyItem struct {
-		ID    uint   `json:"id"`
-		Alert string `json:"alert"`
+		*Item
 	}
 )
 
@@ -50,24 +39,6 @@ func (l *AlarmPage) Detail(ctx context.Context, req *DetailReq) (*DetailResp, er
 	}
 
 	return &DetailResp{
-		ID:             alarmPageDetail.ID,
-		Name:           alarmPageDetail.Name,
-		Remark:         alarmPageDetail.Remark,
-		Icon:           alarmPageDetail.Icon,
-		Color:          alarmPageDetail.Color,
-		Status:         alarmPageDetail.Status,
-		PromStrategies: ToPromStrategyItems(alarmPageDetail.PromStrategies),
+		Item: NewDO(alarmPageDetail).PO().One(),
 	}, nil
-}
-
-// ToPromStrategyItems ...
-func ToPromStrategyItems(list []*model.PromStrategy) []*PromStrategyItem {
-	items := make([]*PromStrategyItem, 0, len(list))
-	for _, item := range list {
-		items = append(items, &PromStrategyItem{
-			ID:    item.ID,
-			Alert: item.Alert,
-		})
-	}
-	return items
 }

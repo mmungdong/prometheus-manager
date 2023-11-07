@@ -24,15 +24,6 @@ type (
 		Page *query.Page `json:"page"`
 		List []*Item     `json:"list"`
 	}
-
-	// Item ...
-	Item struct {
-		ID            uint         `json:"id"`
-		Name          string       `json:"name"`
-		Remark        string       `json:"remark"`
-		StrategyCount int64        `json:"strategy_count"`
-		Status        model.Status `json:"status"`
-	}
 )
 
 // PostList ...
@@ -56,16 +47,7 @@ func (l *StrategyGroup) PostList(ctx context.Context, req *ListReq) (*ListResp, 
 		return nil, err
 	}
 
-	list := make([]*Item, 0, len(strategyGroups))
-	for _, strategyGroup := range strategyGroups {
-		list = append(list, &Item{
-			ID:            strategyGroup.ID,
-			Name:          strategyGroup.Name,
-			Remark:        strategyGroup.Remark,
-			StrategyCount: strategyGroup.StrategyCount,
-			Status:        strategyGroup.Status,
-		})
-	}
+	list := NewDO(strategyGroups...).PO().List()
 	// add your code here
 	return &ListResp{
 		Page: pgInfo,

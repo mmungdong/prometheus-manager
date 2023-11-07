@@ -3,11 +3,8 @@ package strategy
 import (
 	"context"
 
-	query "github.com/aide-cloud/gorm-normalize"
-
 	dataStrategy "prometheus-manager/cmd/prom_server/internal/data/strategy"
 	"prometheus-manager/pkg/alert"
-	"prometheus-manager/pkg/model"
 )
 
 type (
@@ -36,26 +33,19 @@ type (
 func (l *Strategy) Create(ctx context.Context, req *CreateStrategyReq) (*CreateStrategyResp, error) {
 	strategyData := dataStrategy.NewStrategy()
 
-	alarmPages := make([]*model.PromAlarmPage, 0, len(req.AlarmPageIds))
-	for _, alarmPageId := range req.AlarmPageIds {
-		alarmPages = append(alarmPages, &model.PromAlarmPage{BaseModel: query.BaseModel{ID: alarmPageId}})
-	}
-	promDicts := make([]*model.PromDict, 0, len(req.PromDictIds))
-	for _, promDictId := range req.PromDictIds {
-		promDicts = append(promDicts, &model.PromDict{BaseModel: query.BaseModel{ID: promDictId}})
-	}
-
-	newStrategy := &model.PromStrategy{
-		GroupID:      req.GroupId,
+	newStrategyPOValue := &Item{
+		GroupId:      req.GroupId,
 		Alert:        req.Alert,
 		Expr:         req.Expr,
 		For:          req.For,
 		Labels:       req.Labels,
 		Annotations:  req.Annotations,
-		AlarmPages:   alarmPages,
-		Categories:   promDicts,
-		AlertLevelID: req.AlertLevelId,
+		AlarmPageIds: req.AlarmPageIds,
+		PromDictIds:  req.PromDictIds,
+		AlertLevelId: req.AlertLevelId,
 	}
+
+	newStrategy := NewPO(newStrategyPOValue).DO().One()
 
 	if err := strategyData.WithContext(ctx).Create(newStrategy); err != nil {
 		return nil, err

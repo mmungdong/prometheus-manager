@@ -3,11 +3,8 @@ package alarmPage
 import (
 	"context"
 
-	dataAlarmPage "prometheus-manager/cmd/prom_server/internal/data/alarm_page"
-	"prometheus-manager/pkg/model"
-	"prometheus-manager/pkg/times"
-
 	query "github.com/aide-cloud/gorm-normalize"
+	dataAlarmPage "prometheus-manager/cmd/prom_server/internal/data/alarm_page"
 )
 
 type (
@@ -27,19 +24,6 @@ type (
 		Page *query.Page `json:"page"`
 		List []*Item     `json:"list"`
 	}
-
-	Item struct {
-		ID     uint         `json:"id"`
-		Name   string       `json:"name"`
-		Icon   string       `json:"icon"`
-		Color  string       `json:"color"`
-		Remark string       `json:"remark"`
-		Status model.Status `json:"status"`
-
-		CreatedAt int64 `json:"created_at"`
-		UpdatedAt int64 `json:"updated_at"`
-		DeletedAt int64 `json:"deleted_at"`
-	}
 )
 
 // List ...
@@ -53,20 +37,7 @@ func (l *AlarmPage) List(ctx context.Context, req *ListReq) (*ListResp, error) {
 		return nil, err
 	}
 
-	list := make([]*Item, 0, len(alarmList))
-	for _, alarmPage := range alarmList {
-		list = append(list, &Item{
-			ID:        alarmPage.ID,
-			Name:      alarmPage.Name,
-			Icon:      alarmPage.Icon,
-			Color:     alarmPage.Color,
-			Remark:    alarmPage.Remark,
-			Status:    alarmPage.Status,
-			DeletedAt: int64(alarmPage.DeletedAt),
-			CreatedAt: times.TimeToUnix(alarmPage.CreatedAt),
-			UpdatedAt: times.TimeToUnix(alarmPage.UpdatedAt),
-		})
-	}
+	list := NewDO(alarmList...).PO().List()
 
 	return &ListResp{
 		Page: pgInfo,

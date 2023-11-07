@@ -31,13 +31,15 @@ type (
 func (l *PromDict) Create(ctx context.Context, req *CreateReq) (*CreateResp, error) {
 	dictData := dataPromDict.NewPromDict()
 
-	newDict := &model.PromDict{
+	newPODictItem := &Item{
 		Name:     req.Name,
 		Category: req.Category,
 		Color:    req.Color,
 		Status:   model.Enable,
 		Remark:   req.Remark,
 	}
+
+	newDict := NewPO(newPODictItem).DO().One()
 
 	if err := dictData.WithContext(ctx).Create(newDict); err != nil {
 		return nil, err

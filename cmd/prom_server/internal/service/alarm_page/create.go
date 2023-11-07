@@ -3,8 +3,6 @@ package alarmPage
 import (
 	"context"
 
-	query "github.com/aide-cloud/gorm-normalize"
-
 	dataAlarmPage "prometheus-manager/cmd/prom_server/internal/data/alarm_page"
 	"prometheus-manager/pkg/model"
 )
@@ -30,21 +28,16 @@ type (
 func (l *AlarmPage) Create(ctx context.Context, req *CreateReq) (*CreateResp, error) {
 	historyData := dataAlarmPage.NewAlarmPage()
 
-	promStrategies := make([]*model.PromStrategy, 0, len(req.PromStrategyIds))
-	for _, id := range req.PromStrategyIds {
-		promStrategies = append(promStrategies, &model.PromStrategy{
-			BaseModel: query.BaseModel{ID: id},
-		})
+	alarmPagePOValue := &Item{
+		Name:            req.Name,
+		Remark:          req.Remark,
+		Icon:            req.Icon,
+		Color:           req.Color,
+		Status:          req.Status,
+		promStrategyIds: req.PromStrategyIds,
 	}
 
-	newAlarmPage := &model.PromAlarmPage{
-		Name:           req.Name,
-		Remark:         req.Remark,
-		Icon:           req.Icon,
-		Color:          req.Color,
-		Status:         req.Status,
-		PromStrategies: promStrategies,
-	}
+	newAlarmPage := NewPO(alarmPagePOValue).DO().One()
 
 	if err := historyData.WithContext(ctx).Create(newAlarmPage); err != nil {
 		return nil, err

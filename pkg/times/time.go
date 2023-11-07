@@ -1,5 +1,9 @@
 package times
 
+import (
+	"time"
+)
+
 type UnixTime interface {
 	Unix() int64
 }
@@ -11,4 +15,9 @@ func TimeToUnix(t UnixTime) int64 {
 	}
 
 	return t.Unix()
+}
+
+// UnixToTime convert unix timestamp to time.Time
+func UnixToTime(unix int64) time.Time {
+	return time.Unix(unix, 0)
 }
