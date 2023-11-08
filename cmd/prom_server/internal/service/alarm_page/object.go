@@ -29,6 +29,15 @@ type (
 		ID    uint   `json:"id"`
 		Alert string `json:"alert"`
 	}
+
+	SelectItem struct {
+		Label  string       `json:"label"` // 对应前端的label, 为Name
+		Value  any          `json:"value"` // 对应前端的value, 为ID
+		Icon   string       `json:"icon"`
+		Color  string       `json:"color"`
+		Remark string       `json:"remark"`
+		Status model.Status `json:"status"`
+	}
 )
 
 // NewDO 实例化alarmPage DO
@@ -39,11 +48,27 @@ func NewDO(values ...*model.PromAlarmPage) *object.DO[model.PromAlarmPage, Item]
 	)
 }
 
+// NewSelectDO 实例化alarmPage DO
+func NewSelectDO(values ...*model.PromAlarmPage) *object.DO[model.PromAlarmPage, SelectItem] {
+	return object.NewDO(
+		object.DOWithList[model.PromAlarmPage, SelectItem](values...),
+		object.DOWithBuildFunc[model.PromAlarmPage, SelectItem](modelToSelectItem),
+	)
+}
+
 // NewPO 实例化alarmPage PO
 func NewPO(values ...*Item) *object.PO[model.PromAlarmPage, Item] {
 	return object.NewPO(
 		object.POWithList[model.PromAlarmPage, Item](values...),
 		object.POWithBuildFunc[model.PromAlarmPage, Item](alarmPageToModel),
+	)
+}
+
+// NewSelectPO 实例化alarmPage PO
+func NewSelectPO(values ...*SelectItem) *object.PO[model.PromAlarmPage, SelectItem] {
+	return object.NewPO(
+		object.POWithList[model.PromAlarmPage, SelectItem](values...),
+		object.POWithBuildFunc[model.PromAlarmPage, SelectItem](selectItemToModel),
 	)
 }
 
@@ -68,6 +93,20 @@ func alarmPageToModel(item *Item) *model.PromAlarmPage {
 	}
 }
 
+// selectItemToModel ...
+func selectItemToModel(selectItem *SelectItem) *model.PromAlarmPage {
+	return &model.PromAlarmPage{
+		Name:   selectItem.Label,
+		Color:  selectItem.Color,
+		Remark: selectItem.Remark,
+		Status: selectItem.Status,
+		Icon:   selectItem.Icon,
+		BaseModel: query.BaseModel{
+			ID: selectItem.Value.(uint),
+		},
+	}
+}
+
 // modelToAlarmPage ...
 func modelToAlarmPage(alarmPage *model.PromAlarmPage) *Item {
 	return &Item{
@@ -83,6 +122,18 @@ func modelToAlarmPage(alarmPage *model.PromAlarmPage) *Item {
 		CreatedAt: times.TimeToUnix(alarmPage.CreatedAt),
 		UpdatedAt: times.TimeToUnix(alarmPage.UpdatedAt),
 		DeletedAt: alarmPage.DeletedAt,
+	}
+}
+
+// modelToSelectItem ...
+func modelToSelectItem(alarmPage *model.PromAlarmPage) *SelectItem {
+	return &SelectItem{
+		Label:  alarmPage.Name,
+		Value:  alarmPage.ID,
+		Icon:   alarmPage.Icon,
+		Color:  alarmPage.Color,
+		Remark: alarmPage.Remark,
+		Status: alarmPage.Status,
 	}
 }
 
