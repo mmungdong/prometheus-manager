@@ -31,7 +31,7 @@ func InitMysqlDB(dsn string, debug bool) {
 			db = db.Debug()
 		}
 
-		if err := db.Use(ginplus.NewOpentracingPlugin()); err != nil {
+		if err = db.Use(ginplus.NewOpentracingPlugin()); err != nil {
 			panic(err)
 		}
 		_db = db

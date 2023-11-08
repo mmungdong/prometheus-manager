@@ -1,10 +1,9 @@
 package main
 
 import (
+	ginplus "github.com/aide-cloud/gin-plus"
 	"prometheus-manager/cmd/prom_server/internal/conf"
 	"prometheus-manager/pkg/conn"
-
-	ginplus "github.com/aide-cloud/gin-plus"
 )
 
 func Init() *conf.Bootstrap {
@@ -17,14 +16,14 @@ func Init() *conf.Bootstrap {
 		ServiceName = bc.Server.Name
 	}
 
-	ginplus.Logger().Sugar().Infof("%s version: %s", ServiceName, Version)
-
 	if bc.Data != nil {
 		mysqlConf := bc.GetData().GetMysql()
 		if mysqlConf != nil && mysqlConf.GetDSN() != "" {
 			conn.InitMysqlDB(mysqlConf.GetDSN(), mysqlConf.GetDebug())
 		}
 	}
+
+	ginplus.Logger().Sugar().Infof("%s version: %s", ServiceName, Version)
 
 	return bc
 }

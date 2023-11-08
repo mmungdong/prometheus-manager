@@ -10,9 +10,9 @@ import (
 type (
 	// CreateStrategyReq ...
 	CreateStrategyReq struct {
-		GroupId     uint              `json:"group_id"`
-		Alert       string            `json:"alert"`
-		Expr        string            `json:"expr"`
+		GroupId     uint              `json:"group_id" desc:"分组id"`
+		Alert       string            `json:"alert" desc:"告警名称"`
+		Expr        string            `json:"expr" desc:"表达式"`
 		For         string            `json:"for"`
 		Labels      alert.Labels      `json:"labels"`
 		Annotations alert.Annotations `json:"annotations"`

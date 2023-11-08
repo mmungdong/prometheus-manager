@@ -628,6 +628,7 @@ paths:
                                 alert:
                                     type: string
                                     title: Alert
+                                    description: 告警名称
                                 alert_level_id:
                                     type: integer
                                     title: AlertLevelId
@@ -637,12 +638,14 @@ paths:
                                 expr:
                                     type: string
                                     title: Expr
+                                    description: 表达式
                                 for:
                                     type: string
                                     title: For
                                 group_id:
                                     type: integer
                                     title: GroupId
+                                    description: 分组id
                                 labels:
                                     type: object
                                     title: Labels
@@ -875,16 +878,6 @@ paths:
                                     page:
                                         type: object
                                         title: Page
-                                        properties:
-                                            curr:
-                                                type: integer
-                                                title: Curr
-                                            size:
-                                                type: integer
-                                                title: Size
-                                            total:
-                                                type: integer
-                                                title: Total
             parameters:
                 - name: keyword
                   in: query
@@ -901,6 +894,66 @@ paths:
                   schema:
                     type: integer
                     title: Size
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+    /api/strategy/selectList:
+        get:
+            operationId: GetSelectList
+            responses:
+                200:
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    list:
+                                        type: array
+                                        title: List
+                                        items:
+                                            properties:
+                                                label:
+                                                    type: string
+                                                    title: Label
+                                                status:
+                                                    type: object
+                                                    title: Status
+                                                value:
+                                                    type: object
+                                                    title: Value
+                                            type: object
+                                    page:
+                                        type: object
+                                        title: Page
+                                        properties:
+                                            curr:
+                                                type: integer
+                                                title: Curr
+                                            size:
+                                                type: integer
+                                                title: Size
+                                            total:
+                                                type: integer
+                                                title: Total
+            parameters:
+                - name: curr
+                  in: query
+                  schema:
+                    type: integer
+                    title: Curr
+                - name: size
+                  in: query
+                  schema:
+                    type: integer
+                    title: Size
+                - name: keyword
+                  in: query
+                  schema:
+                    type: string
+                    title: Keyword
             requestBody:
                 content:
                     application/json:
@@ -1145,6 +1198,56 @@ paths:
                   schema:
                     type: bool
                     title: IsDelete
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+    /api/strategyGroup/selectList:
+        get:
+            operationId: GetSelectList
+            responses:
+                200:
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    list:
+                                        type: array
+                                        title: List
+                                        items:
+                                            properties:
+                                                label:
+                                                    type: string
+                                                    title: Label
+                                                status:
+                                                    type: object
+                                                    title: Status
+                                                value:
+                                                    type: object
+                                                    title: Value
+                                            type: object
+                                    page:
+                                        type: object
+                                        title: Page
+            parameters:
+                - name: curr
+                  in: query
+                  schema:
+                    type: integer
+                    title: Curr
+                - name: size
+                  in: query
+                  schema:
+                    type: integer
+                    title: Size
+                - name: keyword
+                  in: query
+                  schema:
+                    type: string
+                    title: Keyword
             requestBody:
                 content:
                     application/json:

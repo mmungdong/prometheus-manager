@@ -24,9 +24,9 @@ server:
 	@echo "Starting development server..."
 	# 根据is_dev判断是否是开发环境，如果是开发环境，使用config-dev.yaml配置文件，否则使用config-prod.yaml配置文件
 	@if [ $(is_dev) -eq 1 ]; then \
-		cd ./cmd/prom_server && go run . -config configs/config-dev.yaml; \
+		cd ./cmd/prom_server && go run -ldflags "-X main.Version=$(VERSION)" . -config configs/config-dev.yaml; \
 	else \
-		cd ./cmd/prom_server && go run . -config configs/config-prod.yaml; \
+		cd ./cmd/prom_server && go run -ldflags "-X main.Version=$(VERSION)" . -config configs/config-prod.yaml; \
 	fi
 
 .PHONY: agent
@@ -34,9 +34,9 @@ agent:
 	@echo "Starting development agent..."
 	# 根据is_dev判断是否是开发环境，如果是开发环境，使用config-dev.yaml配置文件，否则使用config-prod.yaml配置文件
 	@if [ $(is_dev) -eq 1 ]; then \
-		cd ./cmd/prom_agent && go run . -config configs/config-dev.yaml; \
+		cd ./cmd/prom_agent && go run -ldflags "-X main.Version=$(VERSION)" . -config configs/config-dev.yaml; \
 	else \
-		cd ./cmd/prom_agent && go run . -config configs/config-prod.yaml; \
+		cd ./cmd/prom_agent && go run -ldflags "-X main.Version=$(VERSION)" . -config configs/config-prod.yaml; \
 	fi
 
 .PHONY: build
