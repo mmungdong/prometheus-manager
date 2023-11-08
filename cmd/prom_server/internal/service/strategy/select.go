@@ -1,10 +1,10 @@
-package alarmPage
+package strategy
 
 import (
 	"context"
 
 	query "github.com/aide-cloud/gorm-normalize"
-	dataAlarmPage "prometheus-manager/cmd/prom_server/internal/data/alarm_page"
+	dataStrategy "prometheus-manager/cmd/prom_server/internal/data/strategy"
 	"prometheus-manager/pkg/model"
 )
 
@@ -24,19 +24,19 @@ type (
 )
 
 // GetSelectList ...
-func (l *AlarmPage) GetSelectList(ctx context.Context, req *SelectReq) (*SelectResp, error) {
-	alarmPageData := dataAlarmPage.NewAlarmPage()
+func (l *Strategy) GetSelectList(ctx context.Context, req *SelectReq) (*SelectResp, error) {
+	strategyData := dataStrategy.NewStrategy()
 
-	var list []*model.PromAlarmPage
+	var list []*model.PromStrategy
 	var err error
 
 	pgInfo := query.NewPage(req.Curr, req.Size)
 	var wheres []query.ScopeMethod
 	if req.Keyword != "" {
-		wheres = append(wheres, query.WhereLikeKeyword(req.Keyword+"%", "name"))
+		wheres = append(wheres, query.WhereLikeKeyword(req.Keyword+"%", "alert"))
 	}
 
-	list, err = alarmPageData.WithContext(ctx).List(pgInfo, wheres...)
+	list, err = strategyData.WithContext(ctx).List(pgInfo, wheres...)
 
 	if err != nil {
 		return nil, err

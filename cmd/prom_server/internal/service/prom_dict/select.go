@@ -33,8 +33,10 @@ func (l *PromDict) GetSelectList(ctx context.Context, req *SelectReq) (*SelectRe
 
 	pgInfo := query.NewPage(req.Curr, req.Size)
 	wheres := []query.ScopeMethod{
-		query.WhereLikeKeyword(req.Keyword+"%", "name"),
 		dataPromDict.WhereCategory(req.Category),
+	}
+	if req.Keyword != "" {
+		wheres = append(wheres, query.WhereLikeKeyword(req.Keyword+"%", "name"))
 	}
 
 	list, err = dictData.WithContext(ctx).List(pgInfo, wheres...)

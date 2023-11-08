@@ -60,6 +60,13 @@ type (
 		ID   uint   `json:"id"`
 		Name string `json:"name"`
 	}
+
+	// SelectItem ...
+	SelectItem struct {
+		Label  string       `json:"label"` // 对应前端的label, 为Name
+		Value  any          `json:"value"` // 对应前端的value, 为ID
+		Status model.Status `json:"status"`
+	}
 )
 
 // NewDO 实例化strategy DO
@@ -70,12 +77,48 @@ func NewDO(values ...*model.PromStrategy) *object.DO[model.PromStrategy, Item] {
 	)
 }
 
+// NewSelectDO 实例化strategy DO
+func NewSelectDO(values ...*model.PromStrategy) *object.DO[model.PromStrategy, SelectItem] {
+	return object.NewDO(
+		object.DOWithList[model.PromStrategy, SelectItem](values...),
+		object.DOWithBuildFunc[model.PromStrategy, SelectItem](modelToSelectItem),
+	)
+}
+
 // NewPO 实例化strategy PO
 func NewPO(values ...*Item) *object.PO[model.PromStrategy, Item] {
 	return object.NewPO(
 		object.POWithList[model.PromStrategy, Item](values...),
 		object.POWithBuildFunc[model.PromStrategy, Item](strategyToModel),
 	)
+}
+
+// NewSelectPO 实例化strategy PO
+func NewSelectPO(values ...*SelectItem) *object.PO[model.PromStrategy, SelectItem] {
+	return object.NewPO(
+		object.POWithList[model.PromStrategy, SelectItem](values...),
+		object.POWithBuildFunc[model.PromStrategy, SelectItem](selectItemToModel),
+	)
+}
+
+// selectItemToModel ...
+func selectItemToModel(selectItem *SelectItem) *model.PromStrategy {
+	return &model.PromStrategy{
+		Alert:  selectItem.Label,
+		Status: selectItem.Status,
+		BaseModel: query.BaseModel{
+			ID: selectItem.Value.(uint),
+		},
+	}
+}
+
+// modelToSelectItem ...
+func modelToSelectItem(modelItem *model.PromStrategy) *SelectItem {
+	return &SelectItem{
+		Label:  modelItem.Alert,
+		Value:  modelItem.ID,
+		Status: modelItem.Status,
+	}
 }
 
 // strategyToModel ...

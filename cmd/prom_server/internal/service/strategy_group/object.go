@@ -29,6 +29,13 @@ type (
 		Name  string `json:"name"`
 		Color string `json:"color"`
 	}
+
+	// SelectItem ...
+	SelectItem struct {
+		Label  string       `json:"label"` // 对应前端的label, 为Name
+		Value  any          `json:"value"` // 对应前端的value, 为ID
+		Status model.Status `json:"status"`
+	}
 )
 
 // NewDO 实例化strategyGroup DO
@@ -39,12 +46,56 @@ func NewDO(values ...*model.PromGroup) *object.DO[model.PromGroup, Item] {
 	)
 }
 
+// NewSelectDO 实例化strategyGroup DO
+func NewSelectDO(values ...*model.PromGroup) *object.DO[model.PromGroup, SelectItem] {
+	return object.NewDO(
+		object.DOWithList[model.PromGroup, SelectItem](values...),
+		object.DOWithBuildFunc[model.PromGroup, SelectItem](modelToSelectItem),
+	)
+}
+
 // NewPO 实例化strategyGroup PO
 func NewPO(values ...*Item) *object.PO[model.PromGroup, Item] {
 	return object.NewPO(
 		object.POWithList[model.PromGroup, Item](values...),
 		object.POWithBuildFunc[model.PromGroup, Item](strategyGroupToModel),
 	)
+}
+
+// NewSelectPO 实例化strategyGroup PO
+func NewSelectPO(values ...*SelectItem) *object.PO[model.PromGroup, SelectItem] {
+	return object.NewPO(
+		object.POWithList[model.PromGroup, SelectItem](values...),
+		object.POWithBuildFunc[model.PromGroup, SelectItem](selectItemToModel),
+	)
+}
+
+// modelToSelectItem ...
+func modelToSelectItem(model *model.PromGroup) *SelectItem {
+	if model == nil {
+		return nil
+	}
+
+	return &SelectItem{
+		Label:  model.Name,
+		Value:  model.ID,
+		Status: model.Status,
+	}
+}
+
+// selectItemToModel ...
+func selectItemToModel(item *SelectItem) *model.PromGroup {
+	if item == nil {
+		return nil
+	}
+
+	return &model.PromGroup{
+		BaseModel: query.BaseModel{
+			ID: item.Value.(uint),
+		},
+		Name:   item.Label,
+		Status: item.Status,
+	}
 }
 
 // modelToStrategyGroup ...
