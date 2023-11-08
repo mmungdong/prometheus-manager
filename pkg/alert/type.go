@@ -65,10 +65,10 @@ func (l *Alert) HashKey() string {
 }
 
 func (l *KV) Scan(src any) error {
-	return json.Unmarshal(src.([]byte), &l)
+	return json.Unmarshal(src.([]byte), l)
 }
 
-func (l *KV) Value() (driver.Value, error) {
+func (l KV) Value() (driver.Value, error) {
 	if l == nil {
 		return "{}", nil
 	}

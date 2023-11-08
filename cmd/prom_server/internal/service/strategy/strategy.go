@@ -31,7 +31,7 @@ type (
 	// Repository ...
 	Repository interface {
 		// ParseStrategyFiles 解析策略文件
-		ParseStrategyFiles(ctx context.Context, yamlFiles []*multipart.FileHeader) ([]*model.PromStrategy, error)
+		ParseStrategyFiles(ctx context.Context, yamlFiles []*multipart.FileHeader, groupId uint) ([]*model.PromStrategy, error)
 		// BatchCreateStrategy 批量创建策略
 		BatchCreateStrategy(ctx context.Context, strategies []*model.PromStrategy) error
 	}

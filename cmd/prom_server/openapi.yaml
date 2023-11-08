@@ -639,7 +639,7 @@ paths:
                                     title: PromDictIds
                                     items:
                                         type: integer
-    /api/strategy/import:
+    /api/strategy/import/:group_id:
         post:
             operationId: PostImport
             responses:
@@ -650,15 +650,21 @@ paths:
                             schema:
                                 type: object
                                 properties:
-                                    group_count:
+                                    strategy_count:
                                         type: integer
-                                        title: GroupCount
+                                        title: StrategyCount
             parameters:
-                - name: rule_yaml_file
+                - name: rule_yaml_files
                   in: query
                   schema:
                     type: array
                     title: RuleYamlFiles
+                - name: group_id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    title: GroupId
             requestBody:
                 content:
                     application/json:
