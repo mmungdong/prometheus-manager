@@ -64,3 +64,7 @@ func (c Category) String() string {
 func (c Category) Value() int {
 	return int(c)
 }
+
+func (c Category) IsUnknown() bool {
+	return c == 0
+}

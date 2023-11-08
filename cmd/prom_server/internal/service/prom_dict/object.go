@@ -19,6 +19,16 @@ type (
 		Status   model.Status   `json:"status"`   // 状态
 		Remark   string         `json:"remark"`   // 字典备注
 	}
+
+	// SelectItem ...
+	SelectItem struct {
+		Label    string         `json:"label"`    // 对应前端的label, 为Name
+		Value    any            `json:"value"`    // 对应前端的value, 为ID
+		Category model.Category `json:"category"` // 字典类型
+		Color    string         `json:"color"`    // 字典tag颜色
+		Status   model.Status   `json:"status"`   // 状态
+		Remark   string         `json:"remark"`   // 字典备注
+	}
 )
 
 // NewDO 实例化prom_dict DO
@@ -26,6 +36,14 @@ func NewDO(values ...*model.PromDict) *object.DO[model.PromDict, Item] {
 	return object.NewDO(
 		object.DOWithList[model.PromDict, Item](values...),
 		object.DOWithBuildFunc[model.PromDict, Item](modelToPromDict),
+	)
+}
+
+// NewSelectDO 实例化prom_dict DO
+func NewSelectDO(values ...*model.PromDict) *object.DO[model.PromDict, SelectItem] {
+	return object.NewDO(
+		object.DOWithList[model.PromDict, SelectItem](values...),
+		object.DOWithBuildFunc[model.PromDict, SelectItem](modelToSelectItem),
 	)
 }
 
@@ -37,6 +55,14 @@ func NewPO(values ...*Item) *object.PO[model.PromDict, Item] {
 	)
 }
 
+// NewSelectPO 实例化prom_dict PO
+func NewSelectPO(values ...*SelectItem) *object.PO[model.PromDict, SelectItem] {
+	return object.NewPO(
+		object.POWithList[model.PromDict, SelectItem](values...),
+		object.POWithBuildFunc[model.PromDict, SelectItem](selectItemToModel),
+	)
+}
+
 // promDictToModel ...
 func promDictToModel(promDict *Item) *model.PromDict {
 	return &model.PromDict{
@@ -45,6 +71,17 @@ func promDictToModel(promDict *Item) *model.PromDict {
 		Color:    promDict.Color,
 		Status:   promDict.Status,
 		Remark:   promDict.Remark,
+	}
+}
+
+// selectItemToModel ...
+func selectItemToModel(selectItem *SelectItem) *model.PromDict {
+	return &model.PromDict{
+		Name:     selectItem.Label,
+		Category: selectItem.Category,
+		Color:    selectItem.Color,
+		Status:   selectItem.Status,
+		Remark:   selectItem.Remark,
 	}
 }
 
@@ -60,5 +97,17 @@ func modelToPromDict(modelItem *model.PromDict) *Item {
 		Color:     modelItem.Color,
 		Status:    modelItem.Status,
 		Remark:    modelItem.Remark,
+	}
+}
+
+// modelToSelectItem ...
+func modelToSelectItem(modelItem *model.PromDict) *SelectItem {
+	return &SelectItem{
+		Label:    modelItem.Name,
+		Value:    modelItem.ID,
+		Category: modelItem.Category,
+		Color:    modelItem.Color,
+		Status:   modelItem.Status,
+		Remark:   modelItem.Remark,
 	}
 }

@@ -4,7 +4,7 @@ go 1.21.0
 
 require (
 	github.com/aide-cloud/gin-plus v0.5.1
-	github.com/aide-cloud/gorm-normalize v0.4.1
+	github.com/aide-cloud/gorm-normalize v0.4.2
 	github.com/confluentinc/confluent-kafka-go/v2 v2.2.0
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-kratos/kratos/v2 v2.7.0

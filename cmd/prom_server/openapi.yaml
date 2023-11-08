@@ -477,6 +477,70 @@ paths:
                     application/json:
                         schema:
                             type: object
+    /api/promDict/selectList:
+        get:
+            operationId: GetSelectList
+            responses:
+                200:
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    list:
+                                        type: array
+                                        title: List
+                                        items:
+                                            properties:
+                                                category:
+                                                    type: object
+                                                    title: Category
+                                                color:
+                                                    type: string
+                                                    title: Color
+                                                label:
+                                                    type: string
+                                                    title: Label
+                                                remark:
+                                                    type: string
+                                                    title: Remark
+                                                status:
+                                                    type: object
+                                                    title: Status
+                                                value:
+                                                    type: object
+                                                    title: Value
+                                            type: object
+                                    page:
+                                        type: object
+                                        title: Page
+            parameters:
+                - name: category
+                  in: query
+                  schema:
+                    type: object
+                    title: Category
+                - name: curr
+                  in: query
+                  schema:
+                    type: integer
+                    title: Curr
+                - name: size
+                  in: query
+                  schema:
+                    type: integer
+                    title: Size
+                - name: keyword
+                  in: query
+                  schema:
+                    type: string
+                    title: Keyword
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
     /api/strategy/create:
         post:
             operationId: Create

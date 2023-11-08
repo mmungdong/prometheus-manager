@@ -2,7 +2,6 @@ package dataPromDict
 
 import (
 	query "github.com/aide-cloud/gorm-normalize"
-
 	"prometheus-manager/pkg/conn"
 	"prometheus-manager/pkg/model"
 )
@@ -26,4 +25,12 @@ func NewPromDict(options ...PromDictOption) *PromDict {
 		option(promDict)
 	}
 	return promDict
+}
+
+// WhereCategory ...
+func WhereCategory(category model.Category) query.ScopeMethod {
+	if category.IsUnknown() {
+		return query.WhereInColumn[model.Category]("category")
+	}
+	return query.WhereColumn("category", category)
 }
