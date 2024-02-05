@@ -5,11 +5,11 @@ networks:
     driver: bridge
 
 services:
-  prometheus_manager:
-    container_name: prometheus_manager
+  prometheus_manager_server:
+    container_name: prometheus_manager_server
     build: 
       context: ../..
-      dockerfile: prom-server/Dockerfile
+      dockerfile: ./deploy/docker/prom-server/Dockerfile
     # image: docker.hub/prometheus-manager/app/prom-server:v0.0.0
     ports:
       - "8001:8000"
@@ -24,7 +24,7 @@ services:
     container_name: prometheus_manager_agent
     build: 
       context: ../..
-      dockerfile: prom-agent/Dockerfile
+      dockerfile: ./deploy/docker/prom-agent/Dockerfile
     # image: docker.hub/prometheus-manager/app/prom-agent:v0.0.0
     ports:
       - "8002:8000"
@@ -33,7 +33,7 @@ services:
       - "../../app/prom_agent/configs/:/data/conf"
       - "../../app/prom_agent/cache:/app/cache"
     depends_on:
-      - prometheus_manager
+      - prometheus_manager_server
     networks:
       prometheus_manager_net:
 
@@ -41,11 +41,11 @@ services:
     container_name: prometheus_manager_web
     build: 
       context: ../..
-      dockerfile: prom-web/Dockerfile
+      dockerfile: ./deploy/docker/prom-web/Dockerfile
     # image: docker.hub/prometheus-manager/web:v0.0.0
     ports:
       - "8000:80"
     depends_on:
-      - prometheus_manager
+      - prometheus_manager_server
     networks:
       prometheus_manager_net:
