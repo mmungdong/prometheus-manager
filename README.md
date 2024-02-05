@@ -161,7 +161,7 @@ make web
 
 ##### docker方式启动
 
-1. 如果本地没有mysql数据库，可以通过以下命令在本地快速拉起一个mysql容器，然后通过工具创建一个名为 **prometheus-manager** 的数据库，如果执行完这步则直接跳过第2步，直接执行执行第3步
+1. 如果本地没有mysql数据库，可以通过以下命令在本地快速拉起一个mysql容器，然后通过工具创建一个名为 **prometheus_manager** 的数据库，如果执行完这步则直接跳过第2步，直接执行执行第3步
 
    ```shell
    docker run -d -p 3306:3306 --name mysql-container -e MYSQL_ROOT_PASSWORD=123456 mysql:8.0
