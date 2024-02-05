@@ -7,6 +7,8 @@ networks:
 services:
   prometheus_manager_server:
     container_name: prometheus_manager_server
+  prometheus_manager_server:
+    container_name: prometheus_manager_server
     build: 
       context: ../..
       dockerfile: ./deploy/docker/prom-server/Dockerfile
@@ -38,6 +40,7 @@ services:
       - "../../app/prom_agent/cache:/app/cache"
     depends_on:
       - prometheus_manager_server
+      - prometheus_manager_server
     networks:
       prometheus_manager_net:
 
@@ -46,10 +49,12 @@ services:
     build: 
       context: ../..
       dockerfile: ./deploy/docker/prom-web/Dockerfile
+      dockerfile: ./deploy/docker/prom-web/Dockerfile
     # image: docker.hub/prometheus-manager/web:v0.0.0
     ports:
       - "8000:80"
     depends_on:
+      - prometheus_manager_server
       - prometheus_manager_server
     networks:
       prometheus_manager_net:
